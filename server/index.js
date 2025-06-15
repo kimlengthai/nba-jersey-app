@@ -14,12 +14,36 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.post('/register', (req, res) => {
-  UserModel.create(req.body)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json(err));
-});
+app.post('/login', (req, res) => 
+    {
+        const { email, password } = req.body;
+        UserModel.findOne({ email: email })
+            .then(user => {
+                if (user) 
+                {
+                    if (user.password === password) 
+                    {
+                        res.json("Success");
+                    } else 
+                    {
+                        res.json("The password is incorrect");
+                    }
+                } 
+                else 
+                {
+                    res.json("User not found");
+                }
+            })
+    });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-});
+app.post('/register', (req, res) => 
+    {
+        UserModel.create(req.body)
+            .then(user => res.json(user))
+            .catch(err => res.status(400).json(err));
+    });
+
+app.listen(process.env.PORT, () => 
+    {
+        console.log(`Server running on port ${process.env.PORT}`);
+    });

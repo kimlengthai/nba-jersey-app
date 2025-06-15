@@ -1,10 +1,10 @@
-function Welcome() {
-  return (
-    <div className="text-center mt-5">
-      <h2>Welcome Page</h2>
-      <p>Registration successful!</p>
-    </div>
-  );
+function Welcome() 
+{
+    return (
+        <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <h2>Welcome Page</h2>
+        </div>
+    );
 }
 
 export default Welcome;
