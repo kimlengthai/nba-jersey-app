@@ -23,15 +23,15 @@ app.post('/login', (req, res) =>
                 {
                     if (user.password === password) 
                     {
-                        res.json("Success");
+                        res.json({ status: "Success", user });
                     } else 
                     {
-                        res.json("The password is incorrect");
+                        res.json({ status: "Error", message: "The password is incorrect" });
                     }
                 } 
                 else 
                 {
-                    res.json("User not found");
+                    res.json({ status: "Error", message: "User not found" });
                 }
             })
     });
