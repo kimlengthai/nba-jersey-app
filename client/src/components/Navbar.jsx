@@ -8,19 +8,31 @@ function Navbar()
   const handleLogout = () => 
     {
         localStorage.removeItem('user');
-        navigate('/login');
+        navigate('/');
     };
 
   const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
-      <Link to="/" className="navbar-brand fw-bold text-primary">
+      <Link to="/" className="navbar-brand fw-bold text-primary"
+      onClick={() => 
+      {
+        localStorage.removeItem('user');
+        navigate('/');
+      }}>
         NBA Jersey Shop
       </Link>
 
       <div className="ms-auto d-flex align-items-center gap-3">
-        {user ? (
+        {user ? 
+           location.pathname === '/profile' ? (
+          <>
+            <Link to="/welcome" className="btn btn-outline-primary btn-sm px-3">
+              Home
+            </Link>
+          </>
+        ) : (
           <>
             <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
               My Profile
@@ -44,7 +56,7 @@ function Navbar()
               Login
             </Link>
           </>
-        ) : null}
+        ): null}
       </div>
     </nav>
   );

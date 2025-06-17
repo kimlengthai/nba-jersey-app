@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+  import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 function MyProfile() 
 {
@@ -51,6 +53,18 @@ function MyProfile()
         }
     }, [navigate]);
 
+    const notify = () => toast.success('Profile updated successfully!', 
+      {
+            position: "top-left",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+      });
+
   // Update Form Inputs 
   const handleChange = (e) => 
     {
@@ -93,6 +107,8 @@ function MyProfile()
             setUser(updatedUser);
             // Set editing mode to false
             setEditing(false);
+            // Show success message
+            notify();
         } catch (err) 
         {
             console.error("Failed to update user:", err);
@@ -105,6 +121,7 @@ function MyProfile()
   return (
     <>
     <Navbar />
+    <ToastContainer />
     <div className="container mt-5">
 
       <h2 className="mb-4">My Profile</h2>
@@ -114,7 +131,7 @@ function MyProfile()
         <h5 className="mb-3">Personal Information</h5>
 
         <div className="mb-3">
-          <label className="form-label">Name</label>
+          <label className="form-label">Full Name</label>
           <input
             type="text"
             name="name"
@@ -156,12 +173,14 @@ function MyProfile()
         <div className="mt-3">
           {!editing ? (
             <button className="btn btn-primary" onClick={() => setEditing(true)}>
-              Edit
+              Edit Profile
             </button>
           ) : (
+            <>
             <button className="btn btn-success" onClick={handleSave}>
               Save
             </button>
+            </>
           )}
         </div>
       </div>
