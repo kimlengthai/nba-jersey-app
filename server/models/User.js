@@ -6,5 +6,7 @@ const userSchema = new mongoose.Schema({
   password: String
 });
 
+// Mongoose automatically pluralises the model name
+// 'register' to 'registers' as the collection name.
 const UserModel = mongoose.model('register', userSchema); // collection name: register
 module.exports = UserModel;

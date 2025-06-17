@@ -1,23 +1,11 @@
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Home() 
 {
   return (
     <div className="vh-100 d-flex flex-column bg-light">
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
-        <span className="navbar-brand fw-bold text-primary">
-          NBA Jersey Shop
-        </span>
-        <div className="ms-auto d-flex align-items-center gap-3">
-          <Link to="/register" className="btn btn-outline-primary btn-sm px-3">
-            Register
-          </Link>
-          <Link to="/login" className="btn btn-outline-secondary btn-sm px-3">
-            Login
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Page Content */}
       <div className="d-flex flex-column justify-content-center align-items-center flex-grow-1">

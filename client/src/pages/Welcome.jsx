@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 
 function Welcome() {
   const [user, setUser] = useState(null);
@@ -14,30 +15,9 @@ function Welcome() {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
-
   return (
     <div className="vh-100 d-flex flex-column">
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
-        <Link to="/" className="navbar-brand fw-bold text-primary text-decoration-none">
-            NBA Jersey Shop
-        </Link>
-        <div className="ms-auto d-flex align-items-center gap-3">
-          <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
-            My Profile
-          </Link>
-          <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
-            Browse NBA Jerseys
-          </Link>
-          <button className="btn btn-danger btn-sm px-3" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Tiles Container */}
       <div className="container my-5">
