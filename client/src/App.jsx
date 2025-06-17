@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
+import MyProfile from './pages/MyProfile';
 
 function App() 
 {
@@ -14,6 +15,7 @@ function App()
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/welcome" element={<Welcome />} />
+          <Route path="/profile" element={<MyProfile />} />
         </Routes>
       </BrowserRouter>
     );

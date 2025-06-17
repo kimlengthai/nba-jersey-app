@@ -15,48 +15,88 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+// LOGIN ENDPOINT
 app.post('/login', async (req, res) => 
+{
+  const { email, password } = req.body;
+
+  try 
+  {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) 
     {
-        const { email, password } = req.body;
-    
-        try
-        {
-            const user = await UserModel.findOne({ email });
+      return res.status(404).json({ status: "Error", message: "User not found" });
+    }
 
-            if (!user) 
-            {
-                return res.json({ status: "Error", message: "User not found" });
-            }
-            const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-            if (!isMatch)
-            {
-                return res.json({ status: "Error", message: "Incorect password" });
-            }
+    if (!isMatch) 
+    {
+      return res.status(401).json({ status: "Error", message: "Incorrect password" });
+    }
 
-            res.json({ status: "Success", user });
-        }
-        catch (err)
-        {
-            res.status(500).json({ status: "Error", message: "Server error", error: err.message });
-        }
-    });
+    res.json({ status: "Success", user });
+  } catch (err) 
+  {
+    res.status(500).json({ status: "Error", message: "Server error", error: err.message });
+  }
+});
 
+// REGISTER ENDPOINT
 app.post('/register', async (req, res) => 
+{
+  try 
+  {
+    const { name, email, password, shippingAddress } = req.body;
+
+    if (!shippingAddress || typeof shippingAddress !== 'object') 
     {
-        try 
-        {
-            const { name, email, password } = req.body;
-            const hash = await bcrypt.hash(password, 10);
-            const user = await UserModel.create({ name, email, password: hash});
-            res.json(user);
-        } catch (err)
-        {
-            res.status(400).json(error);
-        }
+      return res.status(400).json({ status: "Error", message: "Shipping address is missing or invalid." });
+    }
+
+    const hash = await bcrypt.hash(password, 10);
+
+    const user = await UserModel.create({
+      name,
+      email,
+      password: hash,
+      shippingAddress
     });
 
-app.listen(process.env.PORT, () => 
+    res.status(201).json(user);
+  } catch (err) 
+  {
+    res.status(400).json({ status: "Error", message: "Registration failed", error: err.message });
+  }
+});
+
+// PUT endpoint to update user by ID
+app.put('/users/:id', async (req, res) => 
+{
+  try 
+  {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    // Find user by ID and update with new data, return the updated document
+    const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (!updatedUser) 
     {
-        console.log(`Server running on port ${process.env.PORT}`);
-    });
+      return res.status(404).json({ status: "Error", message: "User not found" });
+    }
+
+    res.json(updatedUser);
+  } catch (err) 
+  {
+    res.status(500).json({ status: "Error", message: "Update failed", error: err.message });
+  }
+});
+
+// START SERVER
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => 
+{
+  console.log(`Server running on port ${PORT}`);
+});

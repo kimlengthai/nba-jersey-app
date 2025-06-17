@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 
-function Welcome() {
+function Welcome() 
+{
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (!storedUser) {
+    if (!storedUser) 
+    {
       navigate('/login');
-    } else {
+    } else 
+    {
       setUser(storedUser);
     }
   }, [navigate]);
