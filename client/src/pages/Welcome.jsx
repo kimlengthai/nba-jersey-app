@@ -10,6 +10,8 @@ function Welcome()
   useEffect(() => 
   {
     const storedUser = JSON.parse(localStorage.getItem('user'));
+    // Checks if a user is logged in using localStorage
+    // If not logged in, redirects to login page
     if (!storedUser) 
     {
       navigate('/login');

@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Register() 
 {
+  // A form state for user details
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -21,6 +22,8 @@ function Register()
 
   const handleChange = (e) => 
     {
+      // Ex: e.target.name = "email"
+      // Ex: e.target.value = "newemail@example.com"
         const { name, value } = e.target;
 
         if (['street', 'city', 'state', 'postalCode', 'country'].includes(name)) 

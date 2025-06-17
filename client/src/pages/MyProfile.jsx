@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 function MyProfile() 
 {
+  // Holds the full user object fetched from localStorage
   const [user, setUser] = useState(null);
+  // A flag for whether the profile is in editable mode
   const [editing, setEditing] = useState(false);
+  // A form state for user details
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -25,6 +28,8 @@ function MyProfile()
     {
         const storedUser = JSON.parse(localStorage.getItem("user"));
         console.log("Loaded user from localStorage:", storedUser);
+        // if the user data is found, set the user state
+        // else, redirect to the login page
         if (storedUser) 
             {
                 setUser(storedUser);
@@ -46,10 +51,14 @@ function MyProfile()
         }
     }, [navigate]);
 
+  // Update Form Inputs 
   const handleChange = (e) => 
     {
+      // Ex: e.target.name = "email"
+      // Ex: e.target.value = "newemail@example.com"
         const { name, value } = e.target;
 
+        // This block is for shipping address fields
         if (name in form.shippingAddress) 
             {
                 setForm((prev) => ({
@@ -59,7 +68,9 @@ function MyProfile()
                     [name]: value
                     }
                 }));
-        } else 
+        } 
+        // This block is for non-shipping address fields
+        else 
         {
             setForm((prev) => ({
                 ...prev,
@@ -68,14 +79,19 @@ function MyProfile()
         }
   };
 
+  // Save user details
   const handleSave = async () => 
     {
         try 
         {
+          // Send a PUT request to update the user's data on the backend
             const res = await axios.put(`http://localhost:3001/users/${user._id}`, form);
             const updatedUser = res.data;
+            // Update localStorage
             localStorage.setItem("user", JSON.stringify(updatedUser));
+            // Update component state
             setUser(updatedUser);
+            // Set editing mode to false
             setEditing(false);
         } catch (err) 
         {
@@ -83,6 +99,7 @@ function MyProfile()
         }
     };
 
+  // If user data is not found, return a loading message
   if (!user) return <div>Loading...</div>;
 
   return (

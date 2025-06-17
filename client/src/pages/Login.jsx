@@ -9,6 +9,8 @@ function Login()
   const [error, setError] = useState();
   const navigate = useNavigate();
 
+  // Handling the login process when
+  // a user submit the login form
   const handleSubmit = (e) => 
     {
         e.preventDefault();
