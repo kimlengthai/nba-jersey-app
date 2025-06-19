@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const UserModel = require('./models/User');
 const bcrypt = require('bcrypt');
+const Product = require('./models/Product');
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ app.post('/login', async (req, res) =>
 
     if (!user) 
     {
-      return res.status(404).json({ status: "Error", message: "User not found" });
+      return res.status(404).json({ status: "Error", message: "Incorrect email and password. Please try again." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -109,6 +110,19 @@ app.delete('/users/:id', async (req, res) =>
   } catch (err) 
   {
     res.status(500).json({ status: "Error", message: "Delete failed", error: err.message });
+  }
+});
+
+// Get all products
+app.get('/products', async (req, res) => 
+{
+  try
+  {
+    const products = await Product.find();
+    res.json(products);
+  } catch (err)
+  {
+    res.status(500).json({ message: 'Failed to fetch products', error: err.message});
   }
 });
 

@@ -15,5 +15,5 @@ const userSchema = new mongoose.Schema({
 
 // Mongoose automatically pluralises the model name
 // 'user' to 'users' as the collection name.
-const UserModel = mongoose.model('user', userSchema); // collection name: user
+const UserModel = mongoose.model('user', userSchema); // collection name: users
 module.exports = UserModel;

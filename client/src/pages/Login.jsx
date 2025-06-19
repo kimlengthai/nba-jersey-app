@@ -14,6 +14,9 @@ function Login()
   const handleSubmit = (e) => 
     {
         e.preventDefault();
+        // Clear existing error
+        setError("");
+
         axios.post('http://localhost:3001/login', { email, password })
         .then(result => {console.log(result)
             if (result.data.status === "Success") 
@@ -23,12 +26,14 @@ function Login()
             }
             else
             {
-                alert(result.data.message);
+              // Display specific error
+                setError(result.data.message);
             }
         })
         .catch(err => 
             {
                 console.error(err);
+                // Fallback for network/server error
                 setError('Login request failed. Please try again.');
             });
     };

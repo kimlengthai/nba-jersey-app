@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import MyProfile from './pages/MyProfile';
+import Catalogue from './pages/Catalogue';
 
 function App() 
 {
@@ -16,6 +17,7 @@ function App()
           <Route path="/login" element={<Login />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/profile" element={<MyProfile />} />
+          <Route path="/catalogue" element={<Catalogue />} />
         </Routes>
       </BrowserRouter>
     );
