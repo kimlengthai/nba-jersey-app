@@ -51,6 +51,7 @@ function Register()
         .then(res => 
         {
             console.log(res.data);
+            localStorage.setItem('user', JSON.stringify(res.data));
             navigate('/welcome');
         })
         .catch(err => console.error(err));
