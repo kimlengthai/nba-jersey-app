@@ -102,6 +102,8 @@ function MyProfile()
     {
         try 
         {
+          console.log("Attempting to update user with ID:", user._id);
+          console.log("Form data:", form);
           // Send a PUT request to update the user's data on the backend
             const res = await axios.put(`http://localhost:3001/users/${user._id}`, form);
             const updatedUser = res.data;
