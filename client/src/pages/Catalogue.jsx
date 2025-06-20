@@ -35,7 +35,8 @@ import Young from '../assets/Young.png';
 import Zion from '../assets/Zion.png';
 import Placeholder from '../assets/placeholder.png';
 
-const imageMap = {
+const imageMap = 
+{
   "James.png": James,
   "Curry.png": Curry,
   "Ball.png": Ball,
@@ -68,34 +69,41 @@ const imageMap = {
   "Zion.png": Zion
 }
 
-const easternTeams = [
+const easternTeams = 
+[
   "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls",
   "Cleveland Cavaliers", "Detroit Pistons", "Indiana Pacers", "Miami Heat", "Milwaukee Bucks",
   "New York Knicks", "Orlando Magic", "Philadelphia 76ers", "Toronto Raptors", "Washington Wizards"
 ];
 
-const westernTeams = [
+const westernTeams = 
+[
   "Dallas Mavericks", "Denver Nuggets", "Golden State Warriors", "Houston Rockets", "Los Angeles Clippers",
   "Los Angeles Lakers", "Memphis Grizzlies", "Minnesota Timberwolves", "New Orleans Pelicans",
   "Oklahoma City Thunder", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings",
   "San Antonio Spurs", "Utah Jazz"
 ];
 
-const Catalogue = () => {
+const Catalogue = () => 
+{
   const [products, setProducts] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     axios.get('http://localhost:3001/products')
       .then(res => setProducts(res.data))
       .catch(err => console.error("Failed to load products:", err));
   }, []);
 
   // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  useEffect(() => 
+  {
+    const handleClickOutside = (event) => 
+    {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) 
+      {
         setDropdownOpen(false);
       }
     };
@@ -138,7 +146,7 @@ const Catalogue = () => {
             <ul className="navbar-nav ms-auto align-items-lg-center text-lg-end">
             {/* Teams Dropdown */}
             <li
-                className="nav-item dropdown"
+                className="nav-item dropdown teams-nav-item"
                 style={{ position: 'relative' }}
                 ref={dropdownRef}
                 >

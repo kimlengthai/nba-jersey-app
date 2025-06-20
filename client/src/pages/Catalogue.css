@@ -30,3 +30,48 @@
 {
   background-color: #004bb1;
 }
+
+@media (max-width: 768px) 
+{
+  .dropdown-menu.show 
+  {
+    position: static !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 991.98px) 
+{
+  .navbar-nav 
+  {
+    width: 100%;
+    align-items: flex-start !important; /* Align nav items to the right */
+  }
+
+  .navbar-nav .nav-link 
+  {
+    padding-right: 0.5rem; /* Space from the right edge */
+  }
+
+  .navbar-nav .dropdown-menu 
+  {
+    position: static !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    margin-top: 0.5rem;
+    text-align: left;
+  }
+
+  .navbar-nav .badge 
+  {
+    padding: 0.2em 0.4em;
+    transform: translate(50%, -50%);
+  }
+
+  .teams-nav-item 
+  {
+    margin-right: -2rem;
+  }
+}
