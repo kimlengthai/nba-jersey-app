@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './Catalogue.css';
 
 const easternTeams = [
   "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls",
@@ -36,6 +37,11 @@ const Catalogue = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleAddToCart = (product) => 
+  {
+    console.log("Add to cart:", product);
+  };
 
   return (
     <div className="container py-5">
@@ -141,22 +147,27 @@ const Catalogue = () => {
       <div className="row">
         {products.map(product => (
           <div key={product._id} className="col-md-4 mb-4">
-            <div className="card h-100 shadow">
+            <div className="card h-100 shadow-sm hover-shadow border-0 product-card">
               <img
                 src={product.imageUrl}
                 className="img-fluid"
                 alt={`${product.player} Jersey`}
               />
-              <div className="card-body">
-                <h5 className="card-title">{product.player}</h5>
-                <p className="card-text"><strong>Team:</strong> {product.team}</p>
+              <div className="card-body d-flex flex-column justify-content-between">
+              <div>
+              <h5 className="card-title">{product.player}</h5>
+              <p className="card-text"><strong>Team:</strong> {product.team}</p>
                 <p className="card-text">
-                  <strong>Price:</strong>{" "}
-                  {new Intl.NumberFormat('en-AU', {
+                    <strong>Price:</strong>{" "}
+                    {new Intl.NumberFormat('en-AU', {
                     style: 'currency',
                     currency: 'AUD'
-                  }).format(product.price)}
+                    }).format(product.price)}
                 </p>
+              </div>
+                <button className="btn btn-primary" onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                </button>
               </div>
             </div>
           </div>

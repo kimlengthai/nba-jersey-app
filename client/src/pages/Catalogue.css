@@ -1,0 +1,32 @@
+.product-card 
+{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover 
+{
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.product-card img 
+{
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img 
+{
+  transform: scale(1.03);
+}
+
+.add-to-cart-btn 
+{
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover 
+{
+  background-color: #004bb1;
+}
