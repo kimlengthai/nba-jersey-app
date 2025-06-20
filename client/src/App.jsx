@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Welcome from './pages/Welcome';
 import MyProfile from './pages/MyProfile';
 import Catalogue from './pages/Catalogue';
+import Cart from './pages/Cart';
 
 function App() 
 {
@@ -18,6 +19,7 @@ function App()
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/catalogue" element={<Catalogue />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     );
