@@ -174,6 +174,18 @@ const sampleProducts = [
     price: 97.49,
     team: "Utah Jazz",
     player: "Lauri Markkanen"
+  },
+  {
+    imageUrl: "/client/src/assets/placeholder.png",
+    price: 159.99,
+    team: "New York Knicks",
+    player: "Jalen Brunson"
+  },
+  {
+    imageUrl: "/client/src/assets/placeholder.png",
+    price: 79.99,
+    team: "Memphis Grizzlies",
+    player: "Ja Morant"
   }
 ];
 
