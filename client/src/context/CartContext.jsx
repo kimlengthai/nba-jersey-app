@@ -38,7 +38,9 @@ export const CartProvider = ({ children }) =>
     {
         setCartItems(prevItems =>
             prevItems.map(item =>
-            item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+            item._id === id 
+            ? { ...item, quantity: item.quantity + 1 } 
+            : item
             )
         );
     };
@@ -46,11 +48,10 @@ export const CartProvider = ({ children }) =>
     const decreaseQuantity = (id) => 
     {
         setCartItems(prevItems =>
-            prevItems
-            .map(item =>
-                item._id === id
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
+            prevItems.map(item =>
+            item._id === id 
+            ? { ...item, quantity: item.quantity - 1 } 
+            : item
             )
             .filter(item => item.quantity > 0)
         );
