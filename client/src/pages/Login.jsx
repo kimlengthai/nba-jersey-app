@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
+import { apiUrl } from '../utils/api';
 
 function Login() 
 {
@@ -17,7 +18,7 @@ function Login()
         // Clear existing error
         setError("");
 
-        axios.post('http://localhost:3001/login', { email, password })
+        axios.post(`${apiUrl}/login`, { email, password })
         .then(result => {console.log(result)
             if (result.data.status === "Success") 
             {

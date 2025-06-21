@@ -34,6 +34,7 @@ import Wemby from '../assets/Wemby.png';
 import Young from '../assets/Young.png';
 import Zion from '../assets/Zion.png';
 import Placeholder from '../assets/placeholder.png';
+import { apiUrl } from '../utils/api';
 
 const imageMap = 
 {
@@ -92,9 +93,9 @@ const Catalogue = () =>
 
   useEffect(() => 
   {
-    axios.get('http://localhost:3001/products')
-      .then(res => setProducts(res.data))
-      .catch(err => console.error("Failed to load products:", err));
+    axios.get(`${apiUrl}/products`)
+    .then(res => setProducts(res.data))
+    .catch(err => console.error("Failed to load products:", err));
   }, []);
 
   // Close dropdown on outside click

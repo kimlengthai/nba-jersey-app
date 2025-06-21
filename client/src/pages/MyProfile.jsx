@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+import { apiUrl } from '../utils/api';
 
 Modal.setAppElement('#root');
 
@@ -103,7 +104,7 @@ function MyProfile()
         try 
         {
           // Send a PUT request to update the user's data on the backend
-            const res = await axios.put(`http://localhost:3001/users/${user._id}`, form);
+            const res = await axios.put(`${apiUrl}/users/${user._id}`, form);
             const updatedUser = res.data;
             // Update localStorage
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -125,7 +126,7 @@ function MyProfile()
         try 
         {
             // Send a DELETE request to delete the user's data on the backend
-            await axios.delete(`http://localhost:3001/users/${user._id}`);
+            await axios.delete(`${apiUrl}/users/${user._id}`);
             // Remove user data from localStorage
             localStorage.removeItem("user");
             // Redirect to the home page

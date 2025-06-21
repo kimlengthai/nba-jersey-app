@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from '../utils/api';
 
 function Register() 
 {
@@ -92,7 +93,7 @@ function Register()
 
         if (!validation()) return;
 
-        axios.post('http://localhost:3001/register', form)
+        axios.post(`${apiUrl}/register`, form)
         .then(res => 
         {
             console.log(res.data);
