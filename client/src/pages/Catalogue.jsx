@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Catalogue.css';
 import { useCart } from '../context/CartContext';
 import James from '../assets/James.png';
@@ -85,6 +85,9 @@ const westernTeams =
   "San Antonio Spurs", "Utah Jazz"
 ];
 
+/* Create a helper function to extract the query parameters */
+const useQuery = () => new URLSearchParams(useLocation().search);
+
 const Catalogue = () => 
 {
   const [products, setProducts] = useState([]);
@@ -121,6 +124,9 @@ const Catalogue = () =>
   };
 
   const { cartItems } = useCart();
+
+  const query = useQuery();
+  const selectedTeam = query.get('team');
 
   return (
     <div className="container py-5">
@@ -229,9 +235,25 @@ const Catalogue = () =>
       {/* Catalogue Heading */}
       <h2 className="text-center mb-4">NBA Jersey Catalogue</h2>
 
+      {selectedTeam && (
+        <h5 className='text-secondary mb-4 text-center'>
+          Showing products for: <strong>{selectedTeam}</strong>
+        </h5>
+      )}
+
+      {selectedTeam && (
+        <div className='text-center mb-4'>
+          <Link to="/catalogue" className='btn btn-outline-primary btn-sm rounded-pill px-4'>
+            Show All NBA Jerseys
+          </Link>
+        </div>
+      )}
+
       {/* Product Grid */}
       <div className="row">
-        {products.map(product => (
+        {products
+        .filter(product => !selectedTeam || product.team == selectedTeam)
+        .map(product => (
           <div key={product._id} className="col-md-4 mb-4">
             <div className="card h-100 shadow-sm hover-shadow border-0 product-card">
               <img
@@ -260,12 +282,14 @@ const Catalogue = () =>
         ))}
       </div>
 
-      {/* Back Button */}
-      <div className="text-left">
+      {/* Back Button - Only shown if no team is selected */}
+      {!selectedTeam && (
+        <div className="text-left">
         <Link to="/welcome" className="btn btn-primary mt-4">
           Back
         </Link>
       </div>
+      )}
     </div>
   );
 };
