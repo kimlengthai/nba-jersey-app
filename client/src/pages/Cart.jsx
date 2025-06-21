@@ -71,6 +71,9 @@ const Cart = () =>
 {
     const { cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
 
+    const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
     return (
         <div className='container py-5'>
             <h2>
@@ -113,13 +116,27 @@ const Cart = () =>
                                 className='btn btn-sm btn-danger'
                                 onClick={() => removeFromCart(item._id)}
                             >
-                                Remove
+                                Delete
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             ))}
+            {cartItems.length > 0 && (
+                <div>
+                    <h3>
+                        Subtotal ({totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}) : {" "}
+                        <strong>
+                        {new Intl.NumberFormat('en-AU', 
+                        {
+                            style: 'currency',
+                            currency: 'AUD',
+                        }).format(subtotal)}
+                        </strong>
+                    </h3>
+                </div>
+            )}
             {cartItems.length > 0 && (
                 <button
                 className='btn btn-warning mt-3'
