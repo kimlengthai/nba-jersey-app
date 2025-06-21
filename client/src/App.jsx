@@ -7,6 +7,7 @@ import Welcome from './pages/Welcome';
 import MyProfile from './pages/MyProfile';
 import Catalogue from './pages/Catalogue';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() 
 {
@@ -20,6 +21,7 @@ function App()
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     );

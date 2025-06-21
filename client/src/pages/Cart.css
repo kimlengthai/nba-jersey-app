@@ -7,3 +7,45 @@
 {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
+
+/* Cart Button Section */
+.cart-action-buttons 
+{
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-cart-action
+{
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+}
+
+.btn-checkout
+{
+  font-weight: 600;
+}
+
+.btn-continue
+{
+  border-width: 2px;
+}
+
+.cart-summary-box
+{
+  background-color: #f9f9f9;
+  border: 1px solid #e2e2e2;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cart-summary-box h3
+{
+  margin-bottom: 1.5rem;
+}
