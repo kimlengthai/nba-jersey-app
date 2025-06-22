@@ -35,7 +35,7 @@ function Navbar()
                 My Orders
               </Link>
               <Link to="/payment" className="btn btn-outline-primary btn-sm px-3">
-                Payments
+                Payment
               </Link>
               <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
                 My Profile
@@ -47,7 +47,20 @@ function Navbar()
               Home
             </Link>
           </>
-        ) : (
+        ) : location.pathname === '/orders' ? (
+          <>
+            <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+                Browse NBA Jerseys
+              </Link>
+              <Link to="/payment" className="btn btn-outline-primary btn-sm px-3">
+                Payment
+              </Link>
+              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+                My Profile
+              </Link>
+          </>
+        )
+        : (
           <>
             <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
               My Profile

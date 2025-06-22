@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import { apiUrl } from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
 import Navbar from '../components/Navbar';
 
@@ -89,7 +89,7 @@ const Orders = () =>
                 </table>
                 </div>
             )}
-    </div>
+        </div>
     </>
     );
 }
