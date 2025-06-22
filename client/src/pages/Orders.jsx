@@ -3,6 +3,7 @@ import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
+import Navbar from '../components/Navbar';
 
 const Orders = () => 
 {
@@ -48,45 +49,48 @@ const Orders = () =>
     }
     
     return (
+        <>
+        <Navbar />
         <div className="container py-5">
-      <h2 className="mb-4 text-primary fw-bold text-center">Your Orders</h2>
+            <h2 className="mb-4 text-primary fw-bold text-center">Your Orders</h2>
 
-      {orders.length === 0 ? (
-        <p className="text-center text-muted">You have no orders yet.</p>
-      ) : (
-        <div className="table-responsive">
-          <table className="table table-bordered align-middle">
-            <thead className="table-light">
-              <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{new Date(order.orderDate).toLocaleString()}</td>
-                  <td>${order.totalAmount.toFixed(2)}</td>
-                  <td>{order.status}</td>
-                  <td>
-                    <button
-                      className="btn btn-sm btn-primary"
-                      onClick={() => navigate(`/checkout/${order._id}`)}
-                    >
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            {orders.length === 0 ? (
+                <p className="text-center text-muted">You have no orders yet.</p>
+            ) : (
+                <div className="table-responsive">
+                <table className="table table-bordered align-middle">
+                    <thead className="table-light">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {orders.map((order) => (
+                        <tr key={order._id}>
+                        <td>{order._id}</td>
+                        <td>{new Date(order.orderDate).toLocaleString()}</td>
+                        <td>${order.totalAmount.toFixed(2)}</td>
+                        <td>{order.status}</td>
+                        <td>
+                            <button
+                            className="btn btn-sm btn-primary"
+                            onClick={() => navigate(`/checkout/${order._id}`)}
+                            >
+                            View Details
+                            </button>
+                        </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                </div>
+            )}
     </div>
+    </>
     );
 }
 

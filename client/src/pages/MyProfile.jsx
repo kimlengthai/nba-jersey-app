@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
@@ -339,14 +339,18 @@ function MyProfile()
       <div className="card p-4 shadow-sm mb-4">
         <h5 className="mb-3">Payment Methods</h5>
         <p>Manage your saved payment options.</p>
-        <button className="btn btn-outline-primary">Manage Payments</button>
+        <Link to="/payment" className="btn btn-outline-primary">
+        Manage Payments
+        </Link>
       </div>
 
       {/* Order History */}
       <div className="card p-4 shadow-sm mb-4">
         <h5 className="mb-3">Order History</h5>
         <p>View past orders and order status.</p>
-        <button className="btn btn-outline-primary">View Orders</button>
+        <Link to="/orders" className="btn btn-outline-primary">
+        View Orders
+        </Link>
       </div>
     </div>
     </>

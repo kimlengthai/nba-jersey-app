@@ -14,20 +14,34 @@ function Navbar()
 
   const user = getUserFromLocalStorage();
 
+  const isCheckoutPage = user && /^\/checkout\/[a-f\d]{24}$/.test(location.pathname);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
-      <Link to="/" className="navbar-brand fw-bold text-primary"
-      onClick={() => 
-      {
-        localStorage.removeItem('user');
-        navigate('/');
-      }}>
+      <Link to="/welcome" className="navbar-brand fw-bold text-primary">
         NBA Jersey Shop
       </Link>
 
       <div className="ms-auto d-flex align-items-center gap-3">
         {user ? 
-           location.pathname === '/profile' ? (
+        (
+          isCheckoutPage ? 
+          (
+            <>
+              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+                Browse NBA Jerseys
+              </Link>
+              <Link to="/orders" className="btn btn-outline-primary btn-sm px-3">
+                My Orders
+              </Link>
+              <Link to="/payment" className="btn btn-outline-primary btn-sm px-3">
+                Payments
+              </Link>
+              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+                My Profile
+              </Link>
+            </>
+          ) : location.pathname === '/profile' ? (
           <>
             <Link to="/welcome" className="btn btn-outline-primary btn-sm px-3">
               Home
@@ -48,6 +62,7 @@ function Navbar()
               Logout
             </button>
           </>
+        )
         ) : null}
       </div>
     </nav>
