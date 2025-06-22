@@ -66,6 +66,7 @@ const Orders = () =>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Details</th>
+                        { /* <th>Actions for deleting Order ID</th> */ }
                     </tr>
                     </thead>
                     <tbody>
