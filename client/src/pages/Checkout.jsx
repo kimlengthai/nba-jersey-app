@@ -107,10 +107,10 @@ const Checkout = () =>
 
       <div className="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4">
         <button onClick={() => navigate('/orders')} className="btn btn-outline-primary w-100 w-md-auto">
-          Back to Orders
+          View All Orders
         </button>
-        <button className="btn btn-success w-100 w-md-auto">
-          Pay for this Order
+        <button onClick={() => navigate('/payment')} className="btn btn-success w-100 w-md-auto">
+          Make a Payment
         </button>
       </div>
     </div>

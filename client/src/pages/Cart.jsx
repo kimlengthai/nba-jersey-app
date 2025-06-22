@@ -6,6 +6,7 @@ import { imageMap } from '../assets/playerImages';
 import Placeholder from '../assets/placeholder.png';
 import { apiUrl } from '../utils/api';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
+import Navbar from '../components/Navbar';
 
 const Cart = () => 
     {
@@ -85,9 +86,10 @@ const Cart = () =>
         }
 
         return (
+            <>
+            <Navbar />
             <div className="container py-5">
-            <h2>Your Cart</h2>
-
+            <h2 className="text-primary fw-bold mb-4">Your Cart</h2>
             {cartItems.map((item) => (
                 <div key={item._id} className="card mb-3 p-3">
                 <div className="row g-3 align-items-center">
@@ -147,54 +149,53 @@ const Cart = () =>
                 </div>
             ))}
 
-            {cartItems.length > 0 && (
-                <>
-                <button className="btn btn-warning mt-3" onClick={clearCart}>
-                    Clear Cart
-                </button>
-
-                <div className="cart-summary-box mt-4">
-                    <h3>
-                    Subtotal ({totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}):{' '}
-                    <strong>
-                        {new Intl.NumberFormat('en-AU', {
-                        style: 'currency',
-                        currency: 'AUD'
-                        }).format(subtotal)}
-                    </strong>
-                    </h3>
-
-                    <div className="cart-action-buttons">
-                    <button
-                        onClick={handlePlaceOrder}
-                        className="btn btn-success btn-cart-action btn-checkout"
-                    >
-                        Proceed to Checkout
+                {cartItems.length > 0 && (
+                    <>
+                    <button className="btn btn-warning mt-3" onClick={clearCart}>
+                        Clear Cart
                     </button>
-                    <Link
-                        to="/catalogue"
-                        className="btn btn-outline-primary btn-cart-action btn-continue"
-                    >
-                        Continue Shopping
-                    </Link>
-                    </div>
-                </div>
-                </>
-            )}
 
-            {cartItems.length === 0 && (
-                <>
-                <p className="text-muted mt-3">
+                    <div className="cart-summary-box mt-4">
+                        <h3>
+                        Subtotal ({totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}):{' '}
+                        <strong>
+                            {new Intl.NumberFormat('en-AU', {
+                            style: 'currency',
+                            currency: 'AUD'
+                            }).format(subtotal)}
+                        </strong>
+                        </h3>
+
+                        <div className="cart-action-buttons">
+                        <button
+                            onClick={handlePlaceOrder}
+                            className="btn btn-success btn-cart-action btn-checkout"
+                        >
+                            Proceed to Checkout
+                        </button>
+                        <Link
+                            to="/catalogue"
+                            className="btn btn-outline-primary btn-cart-action btn-continue"
+                        >
+                            Continue Shopping
+                        </Link>
+                        </div>
+                    </div>
+                    </>
+                )}
+
+                {cartItems.length === 0 && (
+                <div className="card p-4 text-center shadow-sm">
+                    <p className="text-muted">
                     Your cart is empty. Browse the catalogue to add items.
-                </p>
-                <div className="text-center">
+                    </p>
                     <Link to="/catalogue" className="btn btn-primary">
                     Continue Shopping
                     </Link>
                 </div>
-                </>
-            )}
+                )}
             </div>
+            </>
         );
 };
 

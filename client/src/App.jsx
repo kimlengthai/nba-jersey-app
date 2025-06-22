@@ -9,6 +9,8 @@ import Catalogue from './pages/Catalogue';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
+import Payment from './pages/Payment';
+import Payments from './pages/Payments';
 
 function App() 
 {
@@ -24,6 +26,8 @@ function App()
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/payments" element={<Payments />} />
         </Routes>
       </BrowserRouter>
     );

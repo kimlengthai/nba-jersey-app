@@ -34,8 +34,8 @@ function Navbar()
               <Link to="/orders" className="btn btn-outline-primary btn-sm px-3">
                 My Orders
               </Link>
-              <Link to="/payment" className="btn btn-outline-primary btn-sm px-3">
-                Payment
+              <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
+                View Payments
               </Link>
               <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
                 My Profile
@@ -50,14 +50,14 @@ function Navbar()
         ) : location.pathname === '/orders' ? (
           <>
             <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
-                Browse NBA Jerseys
-              </Link>
-              <Link to="/payment" className="btn btn-outline-primary btn-sm px-3">
-                Payment
-              </Link>
-              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
-                My Profile
-              </Link>
+              Browse NBA Jerseys
+            </Link>
+            <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
+              View Payments
+            </Link>
+            <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+              My Profile
+            </Link>
           </>
         )
         : (
