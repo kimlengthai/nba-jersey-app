@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import { apiUrl } from '../utils/api';
+import { getUserFromLocalStorage } from '../utils/authHelpers';
 
 Modal.setAppElement('#root');
 
@@ -33,7 +34,7 @@ function MyProfile()
 
   useEffect(() => 
     {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const storedUser = getUserFromLocalStorage();
         console.log("Loaded user from localStorage:", storedUser);
         // if the user data is found, set the user state
         // else, redirect to the login page

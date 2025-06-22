@@ -2,14 +2,16 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
-  items: [
+  items: 
+  [
     {
       productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
       quantity: { type: Number, required: true },
       unitPrice: { type: Number, required: true }
     }
   ],
-  shippingAddress: {
+  shippingAddress: 
+  {
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
@@ -22,5 +24,4 @@ const orderSchema = new mongoose.Schema({
 });
 
 const Order = mongoose.model('Order', orderSchema); // collection name: orders
-
 module.exports = Order;

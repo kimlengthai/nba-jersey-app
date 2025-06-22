@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
+import { getUserFromLocalStorage } from '../utils/authHelpers';
 
 function Welcome() 
 {
@@ -9,7 +10,7 @@ function Welcome()
 
   useEffect(() => 
   {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedUser = getUserFromLocalStorage();
     // Checks if a user is logged in using localStorage
     // If not logged in, redirects to login page
     if (!storedUser) 

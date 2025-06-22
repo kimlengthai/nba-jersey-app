@@ -127,6 +127,31 @@ app.get('/products', async (req, res) =>
   }
 });
 
+// Fetch all orders for a user
+app.get('/orders', async (req, res) => 
+{
+  try
+  {
+    const { userId } = req.query;
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId))
+    {
+      return res.status(400).json({ message: 'Invalid or mising userId' });
+    }
+
+    const orders = await Order.find({ userId })
+    .sort({ orderDate: -1 }) // latest orders first
+    .populate('items.productId', 'player'); // populate only the 'player' field
+
+    res.json(orders);
+  }
+  catch (error)
+  {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Fetch a particular order
 app.get('/orders/:id', async (req, res) => 
 {

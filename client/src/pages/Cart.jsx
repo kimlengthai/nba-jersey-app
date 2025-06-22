@@ -5,14 +5,15 @@ import axios from 'axios';
 import { imageMap } from '../assets/playerImages';
 import Placeholder from '../assets/placeholder.png';
 import { apiUrl } from '../utils/api';
+import { getUserFromLocalStorage } from '../utils/authHelpers';
 
 const Cart = () => 
     {
         // Get user data from localStorage
-  const user = JSON.parse(localStorage.getItem('user'));
+        const user = getUserFromLocalStorage();
 
-  const userId = user?._id;
-  const shippingAddress = user?.shippingAddress;
+        const userId = user?._id;
+        const shippingAddress = user?.shippingAddress;
 
         const 
         {
@@ -38,42 +39,43 @@ const Cart = () =>
         const handlePlaceOrder = async () => 
         {
             if (cartItems.length === 0)
-            {
-                alert("Cart is empty.");
-                return;
-            }
+                {
+                    alert("Cart is empty.");
+                    return;
+                }
             if (!userId)
-            {
-                alert("Please login to place an order.");
-                return;
-            }
+                {
+                    alert("Please login to place an order.");
+                    return;
+                }
             if (!shippingAddress)
-            {
-                alert("Shipping address is missing. Please update your profile.");
-                return;
-            }
+                {
+                    alert("Shipping address is missing. Please update your profile.");
+                    return;
+                }
             // Format items for API
-        const itemsForOrder = cartItems.map(item => (
-            {
-                productId: item._id,
-                quantity: item.quantity,
-                unitPrice: item.price
-            }
+            const itemsForOrder = cartItems.map(item => (
+                {
+                    productId: item._id,
+                    quantity: item.quantity,
+                    unitPrice: item.price
+                }
         )
         );
 
         try
         {
-            const response = await axios.post(`${apiUrl}/orders`, { 
+            const response = await axios.post(`${apiUrl}/orders`, 
+                {
                     userId,  
                     items: itemsForOrder,
                     shippingAddress,
                     totalAmount: subtotal 
                 });
 
-            const orderId = response.data._id;
-            clearCart();
-            navigate(`/checkout/${orderId}`);
+                const orderId = response.data._id;
+                clearCart();
+                navigate(`/checkout/${orderId}`);
         }
         catch (error)
         {

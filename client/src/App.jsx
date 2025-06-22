@@ -8,6 +8,7 @@ import MyProfile from './pages/MyProfile';
 import Catalogue from './pages/Catalogue';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Orders from './pages/Orders';
 
 function App() 
 {
@@ -22,6 +23,7 @@ function App()
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </BrowserRouter>
     );

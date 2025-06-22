@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getUserFromLocalStorage } from '../utils/authHelpers';
 
 function Navbar() 
 {
@@ -11,7 +12,7 @@ function Navbar()
         navigate('/');
     };
 
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = getUserFromLocalStorage();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
@@ -47,16 +48,7 @@ function Navbar()
               Logout
             </button>
           </>
-        ) : location.pathname === '/' ? (
-          <>
-            <Link to="/register" className="btn btn-outline-primary btn-sm px-3">
-              Register
-            </Link>
-            <Link to="/login" className="btn btn-outline-secondary btn-sm px-3">
-              Login
-            </Link>
-          </>
-        ): null}
+        ) : null}
       </div>
     </nav>
   );

@@ -2,27 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../utils/api';
+import Navbar from '../components/Navbar';
 
-const Checkout = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [order, setOrder] = useState(null);
-  const [error, setError] = useState(null);
+const Checkout = () => 
+  {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [order, setOrder] = useState(null);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!id || id.length !== 24) {
-      setError("Invalid order ID.");
-      return;
-    }
+    useEffect(() => 
+      {
+        if (!id || id.length !== 24) 
+          {
+            setError("Invalid order ID.");
+            return;
+        }
 
-    const fetchOrder = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/orders/${id}`);
-        setOrder(response.data);
-      } catch (err) {
-        console.error("Failed to fetch order:", err);
-        setError("Failed to load order details. Please try again later.");
-      }
+    const fetchOrder = async () => 
+      {
+        try 
+        {
+          const response = await axios.get(`${apiUrl}/orders/${id}`);
+          setOrder(response.data);
+        } 
+        catch (err) 
+        {
+          console.error("Failed to fetch order:", err);
+          setError("Failed to load order details. Please try again later.");
+        }
     };
 
     fetchOrder();
@@ -30,7 +38,8 @@ const Checkout = () => {
 
   if (!order) return <div className="alert alert-danger mt-5 text-center">{error}</div>;
 
-  const {
+  const 
+  {
     _id,
     orderDate,
     totalAmount,
@@ -40,6 +49,8 @@ const Checkout = () => {
   } = order;
 
   return (
+    <>
+    <Navbar />
     <div className="container py-5">
       <div className="mb-4 text-center">
         <h2 className="text-primary fw-bold">Order Confirmation</h2>
@@ -103,6 +114,7 @@ const Checkout = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
