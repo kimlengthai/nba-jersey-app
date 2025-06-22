@@ -21,7 +21,7 @@ function App()
           <Route path="/profile" element={<MyProfile />} />
           <Route path="/catalogue" element={<Catalogue />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     );

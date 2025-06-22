@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const UserModel = require('./models/User');
 const bcrypt = require('bcrypt');
 const Product = require('./models/Product');
+const Order = require('./models/Order');
 
 dotenv.config();
 
@@ -123,6 +124,55 @@ app.get('/products', async (req, res) =>
   } catch (err)
   {
     res.status(500).json({ message: 'Failed to fetch products', error: err.message});
+  }
+});
+
+// Fetch a particular order
+app.get('/orders/:id', async (req, res) => 
+{
+  try
+  {
+    const { id } = req.params;
+    // Validate id format first
+    if (!mongoose.Types.ObjectId.isValid(id))
+    {
+      return res.status(400).json({ message: 'Invalid order ID' });
+    }
+    // Populate product name in order items
+    const order = await Order.findById(id).populate('items.productId', 'player');
+    if (!order)
+    {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json(order);
+  }
+  catch (error)
+  {
+    console.error('Error fetching order:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// PLACE AN ORDER ENDPOINT
+app.post('/orders', async (req, res) => 
+{
+  try
+  {
+    const { userId, items, shippingAddress, totalAmount } = req.body;
+
+    const order = await Order.create(
+      {
+        userId,
+        items,
+        shippingAddress,
+        totalAmount
+      }
+    );
+    res.status(201).json(order);
+  }
+  catch (err)
+  {
+    res.status(400).json({ message: 'Failed to create order', error: err.message });
   }
 });
 

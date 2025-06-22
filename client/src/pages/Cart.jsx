@@ -1,12 +1,19 @@
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Cart.css';
-
+import axios from 'axios';
 import { imageMap } from '../assets/playerImages';
 import Placeholder from '../assets/placeholder.png';
+import { apiUrl } from '../utils/api';
 
 const Cart = () => 
     {
+        // Get user data from localStorage
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const userId = user?._id;
+  const shippingAddress = user?.shippingAddress;
+
         const 
         {
             cartItems,
@@ -15,6 +22,8 @@ const Cart = () =>
             increaseQuantity,
             decreaseQuantity
         } = useCart();
+
+        const navigate = useNavigate();
 
         const totalQuantity = cartItems.reduce(
             (total, item) => total + item.quantity,
@@ -25,6 +34,53 @@ const Cart = () =>
             (total, item) => total + item.price * item.quantity,
             0
         );
+
+        const handlePlaceOrder = async () => 
+        {
+            if (cartItems.length === 0)
+            {
+                alert("Cart is empty.");
+                return;
+            }
+            if (!userId)
+            {
+                alert("Please login to place an order.");
+                return;
+            }
+            if (!shippingAddress)
+            {
+                alert("Shipping address is missing. Please update your profile.");
+                return;
+            }
+            // Format items for API
+        const itemsForOrder = cartItems.map(item => (
+            {
+                productId: item._id,
+                quantity: item.quantity,
+                unitPrice: item.price
+            }
+        )
+        );
+
+        try
+        {
+            const response = await axios.post(`${apiUrl}/orders`, { 
+                    userId,  
+                    items: itemsForOrder,
+                    shippingAddress,
+                    totalAmount: subtotal 
+                });
+
+            const orderId = response.data._id;
+            clearCart();
+            navigate(`/checkout/${orderId}`);
+        }
+        catch (error)
+        {
+            console.error('Failed to place order:', error);
+            alert('Failed to place order. Please try again.');
+        }
+        }
 
         return (
             <div className="container py-5">
@@ -48,7 +104,7 @@ const Cart = () =>
                         <strong>Team:</strong> {item.team}
                     </p>
                     <p>
-                        <strong>Price:</strong>{' '}
+                        <strong>Unit Price:</strong>{' '}
                         {new Intl.NumberFormat('en-AU', {
                         style: 'currency',
                         currency: 'AUD'
@@ -107,12 +163,12 @@ const Cart = () =>
                     </h3>
 
                     <div className="cart-action-buttons">
-                    <Link
-                        to="/checkout"
+                    <button
+                        onClick={handlePlaceOrder}
                         className="btn btn-success btn-cart-action btn-checkout"
                     >
                         Proceed to Checkout
-                    </Link>
+                    </button>
                     <Link
                         to="/catalogue"
                         className="btn btn-outline-primary btn-cart-action btn-continue"
