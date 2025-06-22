@@ -42,39 +42,38 @@ function Navbar()
               </Link>
             </>
           ) : location.pathname === '/profile' ? (
-          <>
-            <Link to="/welcome" className="btn btn-outline-primary btn-sm px-3">
-              Home
-            </Link>
-          </>
-        ) : location.pathname === '/orders' ? (
-          <>
-            <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
-              Browse NBA Jerseys
-            </Link>
-            <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
-              View Payments
-            </Link>
-            <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
-              My Profile
-            </Link>
-          </>
-        )
-        : (
-          <>
-            <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
-              My Profile
-            </Link>
-            <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
-              Browse NBA Jerseys
-            </Link>
-            <button
-              className="btn btn-danger btn-sm px-3"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </>
+            <>
+              <Link to="/welcome" className="btn btn-outline-primary btn-sm px-3">
+                Home
+              </Link>
+            </>
+          ) : location.pathname === '/orders' ? (
+            <>
+              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+                Browse NBA Jerseys
+              </Link>
+              <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
+                View Payments
+              </Link>
+              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+                My Profile
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+                My Profile
+              </Link>
+              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+                Browse NBA Jerseys
+              </Link>
+              <button
+                className="btn btn-danger btn-sm px-3"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
         )
         ) : null}
       </div>

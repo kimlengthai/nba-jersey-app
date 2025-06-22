@@ -339,7 +339,7 @@ function MyProfile()
       <div className="card p-4 shadow-sm mb-4">
         <h5 className="mb-3">Payment Methods</h5>
         <p>Manage your saved payment options.</p>
-        <Link to="/payment" className="btn btn-outline-primary">
+        <Link to="/payments" className="btn btn-outline-primary">
         Manage Payments
         </Link>
       </div>
@@ -349,7 +349,7 @@ function MyProfile()
         <h5 className="mb-3">Order History</h5>
         <p>View past orders and order status.</p>
         <Link to="/orders" className="btn btn-outline-primary">
-        View Orders
+        View All Orders
         </Link>
       </div>
     </div>
