@@ -6,6 +6,7 @@ const UserModel = require('./models/User');
 const bcrypt = require('bcrypt');
 const Product = require('./models/Product');
 const Order = require('./models/Order');
+const Payment = require('./models/Payment');
 
 dotenv.config();
 
@@ -216,6 +217,43 @@ app.delete('/orders/:id', async (req, res) =>
   } catch (err) 
   {
     res.status(500).json({ status: "Error", message: "Delete failed", error: err.message });
+  }
+});
+
+// PAYMENT ENDPOINT
+app.post('/payment', async (req, res) => 
+{
+  try
+  {
+    const { orderId, userId, cardholderName, cardNumber, expiryMonth, expiryYear, cvv } = req.body;
+
+    if (!orderId || !userId || !cardholderName || !cardNumber || !expiryMonth || !expiryYear || !cvv)
+    {
+      return res.status(400).json({ message: 'Missing payment details' });
+    }
+
+    // Save payment details
+    const payment = await Payment.create(
+      {
+        orderId,
+        userId,
+        cardholderName,
+        cardNumber,
+        expiryMonth,
+        expiryYear,
+        cvv
+      }
+    );
+
+    // Update order status to 'Completed'
+    await Order.findByIdAndUpdate(orderId, { status: 'Completed' });
+
+    res.status(201).json({ message: 'Payment successful', payment });
+  }
+  catch (err)
+  {
+    console.error('Payment error:', err);
+    res.status(500).json({ message: 'Payment failed', error: err.message });
   }
 });
 

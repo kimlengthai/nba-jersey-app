@@ -109,9 +109,10 @@ const Checkout = () =>
         <button onClick={() => navigate('/orders')} className="btn btn-outline-primary w-100 w-md-auto">
           View All Orders
         </button>
-        <button onClick={() => navigate('/payment')} className="btn btn-success w-100 w-md-auto">
+        { status !== 'Completed' && (
+          <button onClick={() => navigate(`/payment/${id}`)} className="btn btn-success w-100 w-md-auto">
           Make a Payment
-        </button>
+        </button>)}
       </div>
     </div>
     </>

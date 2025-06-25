@@ -27,6 +27,7 @@ function App()
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/payment/:id" element={<Payment />} />
           <Route path="/payments" element={<Payments />} />
         </Routes>
       </BrowserRouter>
