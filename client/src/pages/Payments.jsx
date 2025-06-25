@@ -67,7 +67,11 @@ const Payments = () =>
                         <td>{payment.cardholderName}</td>
                         <td>${payment.orderId?.totalAmount?.toFixed(2) || 'N/A'}</td>
                         <td>{new Date(payment.createdAt).toLocaleString()}</td>
-                        <td>{payment.status || 'Completed'}</td>
+                        <td className="text-center align-middle">
+                          <span className={`badge bg-${payment.status === 'Completed' ? 'success' : 'secondary'}`}>
+                            {payment.status || 'Completed'}
+                          </span>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

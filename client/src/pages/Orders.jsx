@@ -65,6 +65,18 @@ const Orders = () =>
         }
       
     };
+
+    // Function for status coloring
+    const getStatusBadgeClass = (status) => 
+    {
+        switch (status) 
+        {
+            case 'Completed': return 'success';
+            case 'Pending': return 'warning';
+            case 'Cancelled': return 'danger';
+            default: return 'secondary';
+        };
+    }; 
     
     return (
         <>
@@ -94,7 +106,11 @@ const Orders = () =>
                         <td>{order._id}</td>
                         <td>{new Date(order.orderDate).toLocaleString()}</td>
                         <td>${order.totalAmount.toFixed(2)}</td>
-                        <td>{order.status}</td>
+                        <td className="text-center align-middle">
+                            <span className={`badge bg-${getStatusBadgeClass(order.status)}`}>
+                                {order.status}
+                            </span>
+                        </td>
                         <td>
                             <button
                             className="btn btn-sm btn-primary"
