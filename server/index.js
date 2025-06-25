@@ -257,6 +257,35 @@ app.post('/payment', async (req, res) =>
   }
 });
 
+// FETCH PAYMENT HISTORY FOR A USER
+app.get('/payments', async (req, res) => 
+{
+  try
+  {
+    const { userId } = req.query;
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId))
+    {
+      return res.status(400).json({ message: 'Invalid or missing userId' });
+    }
+
+    const payments = await Payment.find({ userId })
+    // Latest payments first
+    .sort({ createdAt: -1 })
+    // Populate totalAmount from order
+    .populate('orderId', 'totalAmount')
+    // Improve performance
+    .lean();
+
+    res.json(payments);
+  }
+  catch (err)
+  {
+    console.error('Error fetching payment history:', err);
+    res.status(500).json({ message: 'Failed to fetch payments', error: err.message });
+  }
+});
+
 // START SERVER
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => 
