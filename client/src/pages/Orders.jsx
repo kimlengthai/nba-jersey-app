@@ -47,6 +47,24 @@ const Orders = () =>
     {
         return <div className='alert alert-danger mt-5 text-center'>{error}</div>;
     }
+
+    // Delete user's order
+    const handleDelete = async (orderId) => 
+    {
+        try 
+        {
+            // Send a DELETE request to delete the user's order on the backend
+            await axios.delete(`${apiUrl}/orders/${orderId}`);
+            // Remove the deleted order from UI
+            setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
+            // Redirect to the orders page
+            navigate("/orders");
+        } catch (err) 
+        {
+            console.error("Failed to delete user's order:", err);
+        }
+      
+    };
     
     return (
         <>
@@ -66,6 +84,7 @@ const Orders = () =>
                         <th>Total</th>
                         <th>Status</th>
                         <th>Details</th>
+                        <th>Action</th>
                         { /* <th>Actions for deleting Order ID</th> */ }
                     </tr>
                     </thead>
@@ -82,6 +101,14 @@ const Orders = () =>
                             onClick={() => navigate(`/checkout/${order._id}`)}
                             >
                             View Details
+                            </button>
+                        </td>
+                        <td>
+                            <button
+                            className="btn btn-sm btn-danger"
+                            onClick={() => handleDelete(order._id)}
+                            >
+                            Delete
                             </button>
                         </td>
                         </tr>

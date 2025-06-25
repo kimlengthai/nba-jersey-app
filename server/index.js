@@ -201,6 +201,24 @@ app.post('/orders', async (req, res) =>
   }
 });
 
+// Delete user's order
+app.delete('/orders/:id', async (req, res) => 
+{
+  try 
+  {
+    const { id } = req.params;
+    const deletedOrder = await Order.findByIdAndDelete(id);
+    if (!deletedOrder) 
+    {
+      return res.status(404).json({ status: "Error", message: "Order not found" });
+    }
+    res.json({ status: "Success", message: "Order deleted successfully", order: deletedOrder });
+  } catch (err) 
+  {
+    res.status(500).json({ status: "Error", message: "Delete failed", error: err.message });
+  }
+});
+
 // START SERVER
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => 
