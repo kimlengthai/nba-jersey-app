@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from '../utils/api';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Register() 
 {
+  const [showPassword, setShowPassword] = useState(false);
+
   // A form state for user details
   const [form, setForm] = useState({
     name: '',
@@ -138,6 +141,7 @@ function Register()
 
           <div className="form-group mb-3">
             <label className="form-label">Password</label>
+            <div className="input-group">
             <input 
               type="password"
               name="password"
@@ -145,6 +149,15 @@ function Register()
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}
               onChange={handleChange}
             />
+            <button
+              type="button"
+              className='btn btn-outline-secondary'
+              onClick={() => setShowPassword(prev => !prev)}
+              tabIndex={-1}
+              >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+            </div>
             {errors.password && <div className="text-danger">{errors.password}</div>}
           </div>
 

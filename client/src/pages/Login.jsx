@@ -2,11 +2,13 @@ import { useState } from 'react';
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { apiUrl } from '../utils/api';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Login() 
 {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState();
   const navigate = useNavigate();
 
@@ -58,13 +60,23 @@ function Login()
           </div>
           <div className="mb-3">
             <label htmlFor="password"><strong>Password</strong></label>
-            <input
-              type="password"
-              className="form-control rounded-0"
-              placeholder="Enter Password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className='input-group'>
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control rounded-0"
+                placeholder="Enter Password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+              type="button"
+              className='btn btn-outline-secondary'
+              onClick={() => setShowPassword(prev => !prev)}
+              tabIndex={-1}
+              >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">Login</button>
         </form>

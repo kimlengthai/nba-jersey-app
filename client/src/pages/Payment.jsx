@@ -191,7 +191,7 @@ const Payment = () =>
             <div className="mb-3">
               <label className="form-label">CVV</label>
               <input
-                type="text"
+                type="password"
                 maxLength="3"
                 className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
                 value={formData.cvv}
