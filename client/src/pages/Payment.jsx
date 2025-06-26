@@ -9,6 +9,10 @@ const Payment = () =>
   {
     const { id } = useParams(); // order ID from URL
     const navigate = useNavigate();
+    // State variable to hold the card number
+    const [cardNumber, setCardNumber] = useState('');
+    // State variable to hold the expiration date
+    const [expirationDate, setExpirationDate] = useState('');
 
     const [formData, setFormData] = useState(
       {
@@ -90,6 +94,61 @@ const Payment = () =>
           }
         };
 
+        const formatAndSetCcNumber = e => 
+        {
+          // Remove all the empty spaces in the input
+          const inputValue = e.target.value.replace(/ /g, "");
+          // Get only digits
+          let inputNumbersOnly = inputValue.replace(/\D/g, "");
+
+          if (inputNumbersOnly.length > 16)
+          {
+            // If more than 16 digits, get the first 16
+            inputNumbersOnly = inputNumbersOnly.substr(0, 16);
+          }
+          // Get an array of 4 digits per an element EX: ["1234", "5678", "9012",  ...]
+          const splits = inputNumbersOnly.match(/.{1,4}/g);
+
+          let spacedNumber = "";
+          if (splits)
+          {
+            // Join all the splits with an empty space
+            spacedNumber = splits.join(" ");
+          }
+          // Set the new CardNumber
+          setCardNumber(spacedNumber);
+          // Unformatted digits
+          setFormData(prev => ({ ...prev, cardNumber: inputNumbersOnly }));
+        }
+
+        const formatAndSetExpirationDate = e => 
+        {
+          const inputValue = e.target.value;
+          // Remove all the empty spaces in the input
+          const inputWithoutSpaces = inputValue.replace(/ /g, "");
+          // Get only digits
+          let inputDigitsOnly = inputWithoutSpaces.replace(/\D/g, "");
+          if (inputDigitsOnly.length > 4)
+          {
+            // If more than 4 digits, get the first 4
+            inputDigitsOnly = inputDigitsOnly.substr(0, 4);
+          }
+          // Get an array of 2 digits per an element EX: ["01", "23", "45",  ...]
+          const splits = inputDigitsOnly.match(/.{1,2}/g);
+
+          let spacedDate = "";
+          if (splits)
+          {
+            // Join all the splits with an empty space
+            spacedDate = splits.join("/");
+            // Set the new ExpirationDate
+            setExpirationDate(spacedDate);
+          }
+          setExpirationDate(spacedDate);
+          // Formatted as MM/YY
+          setFormData(prev => ({ ...prev, expiration: spacedDate }));
+        }
+
     return (
       <>
         <Navbar />
@@ -111,10 +170,9 @@ const Payment = () =>
               <label className="form-label">Card Number</label>
               <input
                 type="text"
-                maxLength="16"
                 className={`form-control ${errors.cardNumber ? 'is-invalid' : ''}`}
-                value={formData.cardNumber}
-                onChange={(e) => setFormData({ ...formData, cardNumber: e.target.value })}
+                value={cardNumber}
+                onChange={formatAndSetCcNumber}
               />
               {errors.cardNumber && <div className="invalid-feedback">{errors.cardNumber}</div>}
             </div>
@@ -124,8 +182,8 @@ const Payment = () =>
               <input
                 type="text"
                 className={`form-control ${errors.expiration ? 'is-invalid' : ''}`}
-                value={formData.expiration}
-                onChange={(e) => setFormData({ ...formData, expiration: e.target.value })}
+                value={expirationDate}
+                onChange={formatAndSetExpirationDate}
               />
               {errors.expiration && <div className="invalid-feedback">{errors.expiration}</div>}
             </div>
