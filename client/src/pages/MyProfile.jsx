@@ -323,13 +323,15 @@ function MyProfile()
       }}>
 
       <h3 className="fw-bold mb-3" id="modal-title">Delete Confirmation</h3>
-      <p className="bg-danger text-white rounded p-3 mb-4 text-wrap text-break ms-2" id="modal-description">Are you sure you want to delete your account? This account cannot be undone.</p>
+      <p className="bg-danger text-white rounded p-3 mb-4 text-wrap text-break mx-2" id="modal-description">
+        Are you sure you want to delete your account? This account cannot be undone.
+      </p>
 
       <div className="d-flex justify-content-between flex-column flex-sm-row gap-2 mt-4">
-        <button className="btn btn-secondary ms-2" onClick={onDeleteCancel}>
+        <button className="btn btn-secondary mx-2" onClick={onDeleteCancel}>
         Cancel
         </button>
-        <button className="btn btn-danger ms-2" onClick={onDeleteConfirm}>
+        <button className="btn btn-danger mx-2" onClick={onDeleteConfirm}>
         Delete
         </button>
       </div>
