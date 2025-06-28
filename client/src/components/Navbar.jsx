@@ -59,6 +59,18 @@ function Navbar()
                 My Profile
               </Link>
             </>
+          ) : location.pathname === '/payments' ? (
+            <>
+              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+                Browse NBA Jerseys
+              </Link>
+              <Link to="/orders" className="btn btn-outline-primary btn-sm px-3">
+                View Orders
+              </Link>
+              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+                My Profile
+              </Link>
+            </>
           ) : (
             <>
               <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">

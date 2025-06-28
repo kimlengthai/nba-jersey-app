@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Cart.css';
 import axios from 'axios';
 import { imageMap } from '../assets/playerImages';
-import Placeholder from '../assets/placeholder.png';
+import Placeholder from '../assets/jerseyCollection/placeholder.png';
 import { apiUrl } from '../utils/api';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
 import Navbar from '../components/Navbar';

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 import './Catalogue.css';
 import { useCart } from '../context/CartContext';
-import Placeholder from '../assets/placeholder.png';
+import Placeholder from '../assets/jerseyCollection/placeholder.png';
 import { apiUrl } from '../utils/api';
 import { imageMap } from '../assets/playerImages';
 
