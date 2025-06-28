@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
+import './Navbar.css';
 
 function Navbar() 
 {
@@ -17,66 +18,66 @@ function Navbar()
   const isCheckoutPage = user && /^\/checkout\/[a-f\d]{24}$/.test(location.pathname);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
+    <nav className="custom-navbar navbar navbar-expand-lg bg-white shadow-sm px-4">
       <Link to="/welcome" className="navbar-brand fw-bold text-primary">
         NBA Jersey Shop
       </Link>
 
-      <div className="ms-auto d-flex align-items-center gap-3">
+      <div className="navbar-links ms-auto d-flex align-items-center gap-3">
         {user ? 
         (
           isCheckoutPage ? 
           (
             <>
-              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
-              <Link to="/orders" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/orders" className="nav-btn btn btn-outline-primary btn-sm">
                 My Orders
               </Link>
-              <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/payments" className="nav-btn btn btn-outline-primary btn-sm">
                 View Payments
               </Link>
-              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/profile" className="nav-btn btn btn-outline-primary btn-sm">
                 My Profile
               </Link>
             </>
           ) : location.pathname === '/profile' ? (
             <>
-              <Link to="/welcome" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/welcome" className="nav-btn btn btn-outline-primary btn-sm">
                 Home
               </Link>
             </>
           ) : location.pathname === '/orders' ? (
             <>
-              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
-              <Link to="/payments" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/payments" className="nav-btn btn btn-outline-primary btn-sm">
                 View Payments
               </Link>
-              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/profile" className="nav-btn btn btn-outline-primary btn-sm">
                 My Profile
               </Link>
             </>
           ) : location.pathname === '/payments' ? (
             <>
-              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
-              <Link to="/orders" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/orders" className="nav-btn btn btn-outline-primary btn-sm">
                 View Orders
               </Link>
-              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/profile" className="nav-btn btn btn-outline-primary btn-sm">
                 My Profile
               </Link>
             </>
           ) : (
             <>
-              <Link to="/profile" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/profile" className="nav-btn btn btn-outline-primary btn-sm">
                 My Profile
               </Link>
-              <Link to="/catalogue" className="btn btn-outline-primary btn-sm px-3">
+              <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
               <button
