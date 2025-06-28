@@ -1,0 +1,22 @@
+.payment-container 
+{
+  padding: 3rem 1rem;
+}
+
+.payment-title 
+{
+  text-align: center;
+  color: #198754; /* Bootstrap success */
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.payment-form 
+{
+  background-color: #fff;
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,19 @@
+.orders-container 
+{
+  padding: 3rem 1rem;
+}
+
+.orders-title 
+{
+  margin-bottom: 2rem;
+  color: #0d6efd; /* Bootstrap primary */
+  font-weight: bold;
+  text-align: center;
+}
+
+.orders-empty 
+{
+  text-align: center;
+  color: #6c757d; /* Bootstrap muted text */
+  font-size: 1rem;
+}

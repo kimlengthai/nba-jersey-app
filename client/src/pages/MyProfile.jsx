@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import { apiUrl } from '../utils/api';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
+import './MyProfile.css';
 
 Modal.setAppElement('#root');
 
@@ -163,198 +164,107 @@ function MyProfile()
 
   return (
     <>
-    <Navbar />
-    <ToastContainer />
-    <div className="container mt-5">
+      <Navbar />
+      <ToastContainer />
+      <div className="container profile-container">
+        <h2 className="mb-4">My Profile</h2>
 
-      <h2 className="mb-4">My Profile</h2>
+        {/* Personal Info */}
+        <div className="profile-section">
+          <h3>Personal Information</h3>
 
-      {/* Personal Information */}
-      <div className="card p-4 shadow-sm mb-4">
-        <h3 className="mb-3 fw-bold">Personal Information</h3>
-
-        <div className="mb-3">
-          <label className="form-label fw-bold">Full Name</label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            value={form.name}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label fw-bold">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={form.email}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
-
-        {/* Shipping Address */}
-        <h6 className="mt-4 fw-bold">Shipping Address</h6>
-        {/* {["street", "city", "state", "postalCode", "country"].map((field) => (
-          <div className="mb-2" key={field}>
-            <label className="form-label text-capitalize">{field}</label>
+          <div className="mb-3">
+            <label className="form-label">Full Name</label>
             <input
               type="text"
-              name={field}
+              name="name"
               className="form-control"
-              value={form.shippingAddress[field]}
+              value={form.name}
               onChange={handleChange}
               disabled={!editing}
             />
           </div>
-        ))} */}
 
-        <div className="mb-2">
-          <label className="form-label fw-bold">Street</label>
-          <input
-            type="text"
-            name="street"
-            className="form-control"
-            value={form.shippingAddress.street}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={form.email}
+              onChange={handleChange}
+              disabled={!editing}
+            />
+          </div>
 
-        <div className="mb-2">
-          <label className="form-label fw-bold">City</label>
-          <input
-            type="text"
-            name="city"
-            className="form-control"
-            value={form.shippingAddress.city}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
+          {/* Address */}
+          <h6 className="mt-4">Shipping Address</h6>
 
-        <div className="mb-2">
-          <label className="form-label fw-bold">State</label>
-          <input
-            type="text"
-            name="state"
-            className="form-control"
-            value={form.shippingAddress.state}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
+          {["street", "city", "state", "postalCode", "country"].map((field) => (
+            <div className="mb-2" key={field}>
+              <label className="form-label text-capitalize">{field}</label>
+              <input
+                type="text"
+                name={field}
+                className="form-control"
+                value={form.shippingAddress[field]}
+                onChange={handleChange}
+                disabled={!editing}
+              />
+            </div>
+          ))}
 
-        <div className="mb-2">
-          <label className="form-label fw-bold">Postcode</label>
-          <input
-            type="text"
-            name="postalCode"
-            className="form-control"
-            value={form.shippingAddress.postalCode}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="mb-2">
-          <label className="form-label fw-bold">Country</label>
-          <input
-            type="text"
-            name="country"
-            className="form-control"
-            value={form.shippingAddress.country}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="mt-3 d-flex justify-content-between">
-          {!editing ? (
-            <button className="btn btn-primary" onClick={() => setEditing(true)}>
-              Edit Profile
+          <div className="profile-actions">
+            {!editing ? (
+              <button className="btn btn-primary" onClick={() => setEditing(true)}>
+                Edit Profile
+              </button>
+            ) : (
+              <button className="btn btn-success" onClick={handleSave}>
+                Save
+              </button>
+            )}
+            <button className="btn btn-danger" onClick={onDeleteClick}>
+              Delete
             </button>
-          ) : (
-            <>
-            <button className="btn btn-success" onClick={handleSave}>
-              Save
-            </button>
-            </>
-          )}
-          <button className="btn btn-danger ms-2" onClick={onDeleteClick}>
-            Delete
-          </button>
+          </div>
+        </div>
+
+        {/* Modal */}
+        <Modal
+          isOpen={showDeleteModal}
+          onRequestClose={onDeleteCancel}
+          contentLabel="Confirm Account Deletion"
+        >
+          <h3 className="fw-bold mb-3" id="modal-title">Delete Confirmation</h3>
+          <p className="modal-warning-text" id="modal-description">
+            Are you sure you want to delete your account? This account cannot be undone.
+          </p>
+
+          <div className="modal-actions">
+            <button className="btn btn-secondary" onClick={onDeleteCancel}>Cancel</button>
+            <button className="btn btn-danger" onClick={onDeleteConfirm}>Delete</button>
+          </div>
+        </Modal>
+
+        {/* Payment */}
+        <div className="profile-section">
+          <h5>Payment Methods</h5>
+          <p>Manage your saved payment options.</p>
+          <Link to="/payments" className="btn btn-outline-primary">
+            Manage Payments
+          </Link>
+        </div>
+
+        {/* Orders */}
+        <div className="profile-section">
+          <h5>Order History</h5>
+          <p>View past orders and order status.</p>
+          <Link to="/orders" className="btn btn-outline-primary">
+            View All Orders
+          </Link>
         </div>
       </div>
-
-      { /* Confirmation Modal */ }
-      <Modal 
-      isOpen={showDeleteModal}
-      onRequestClose={onDeleteCancel}
-      contentLabel="Confirm Account Deletion"
-      aria={{
-        labelledby: "modal-title",
-        describedby: "modal-description"
-      }}
-      style={{
-        overlay: 
-        {
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        },
-        content:
-        {
-          width: '90%',
-          maxWidth: '500px',
-          maxHeight: '90%',
-          margin: 'auto',
-          padding: '16px',
-          borderRadius: '12px',
-          /* This resets the modal size for margin control */
-          inset: 'auto',
-          boxSizing: 'border-box'
-        }
-      }}>
-
-      <h3 className="fw-bold mb-3" id="modal-title">Delete Confirmation</h3>
-      <p className="bg-danger text-white rounded p-3 mb-4 text-wrap text-break mx-2" id="modal-description">
-        Are you sure you want to delete your account? This account cannot be undone.
-      </p>
-
-      <div className="d-flex justify-content-between flex-column flex-sm-row gap-2 mt-4">
-        <button className="btn btn-secondary mx-2" onClick={onDeleteCancel}>
-        Cancel
-        </button>
-        <button className="btn btn-danger mx-2" onClick={onDeleteConfirm}>
-        Delete
-        </button>
-      </div>
-      </Modal>
-
-      {/* Payment Methods */}
-      <div className="card p-4 shadow-sm mb-4">
-        <h5 className="mb-3">Payment Methods</h5>
-        <p>Manage your saved payment options.</p>
-        <Link to="/payments" className="btn btn-outline-primary">
-        Manage Payments
-        </Link>
-      </div>
-
-      {/* Order History */}
-      <div className="card p-4 shadow-sm mb-4">
-        <h5 className="mb-3">Order History</h5>
-        <p>View past orders and order status.</p>
-        <Link to="/orders" className="btn btn-outline-primary">
-        View All Orders
-        </Link>
-      </div>
-    </div>
     </>
   );
 }

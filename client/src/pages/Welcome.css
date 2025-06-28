@@ -1,0 +1,37 @@
+.welcome-page 
+{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-container 
+{
+  margin-top: 3rem;
+}
+
+.welcome-card 
+{
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.action-card 
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.welcome-title 
+{
+  color: #198754; /* Bootstrap 'text-success' green */
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle 
+{
+  font-size: 1.25rem;
+  color: #6c757d; /* Bootstrap 'text-muted' */
+}

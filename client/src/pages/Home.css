@@ -1,0 +1,65 @@
+.home-wrapper 
+{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa; /* Bootstrap's light bg */
+}
+
+.home-navbar 
+{
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.home-navbar .navbar-brand 
+{
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+.home-actions 
+{
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.home-content 
+{
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-box 
+{
+  text-align: center;
+  background-color: #ffffff;
+  padding: 3rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.home-box h1 
+{
+  margin-bottom: 1.5rem;
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+.home-box p 
+{
+  margin-bottom: 1.5rem;
+  color: #6c757d;
+  font-size: 1.25rem;
+}
+
+.home-box .btn + .btn 
+{
+  margin-left: 1rem;
+}

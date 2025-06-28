@@ -4,6 +4,7 @@ import { apiUrl } from '../utils/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
 import Navbar from '../components/Navbar';
+import './Orders.css';
 
 const Orders = () => 
 {
@@ -81,60 +82,63 @@ const Orders = () =>
     return (
         <>
         <Navbar />
-        <div className="container py-5">
-            <h2 className="mb-4 text-primary fw-bold text-center">Your Orders</h2>
+        <div className="orders-container">
+            <h2 className="orders-title">Your Orders</h2>
+
+            {error && (
+            <div className="alert alert-danger text-center mt-4">{error}</div>
+            )}
 
             {orders.length === 0 ? (
-                <p className="text-center text-muted">You have no orders yet.</p>
+            <p className="orders-empty">You have no orders yet.</p>
             ) : (
-                <div className="table-responsive">
+            <div className="table-responsive">
                 <table className="table table-bordered align-middle">
-                    <thead className="table-light">
+                <thead className="table-light">
                     <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                        <th>Details</th>
-                        <th>Action</th>
-                        { /* <th>Actions for deleting Order ID</th> */ }
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                    <th>Action</th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     {orders.map((order) => (
-                        <tr key={order._id}>
+                    <tr key={order._id}>
                         <td>{order._id}</td>
                         <td>{new Date(order.orderDate).toLocaleString()}</td>
                         <td>${order.totalAmount.toFixed(2)}</td>
-                        <td className="text-center align-middle">
-                            <span className={`badge bg-${getStatusBadgeClass(order.status)}`}>
-                                {order.status}
-                            </span>
+                        <td className="text-center">
+                        <span className={`badge bg-${getStatusBadgeClass(order.status)}`}>
+                            {order.status}
+                        </span>
                         </td>
                         <td>
-                            <button
+                        <button
                             className="btn btn-sm btn-primary"
                             onClick={() => navigate(`/checkout/${order._id}`)}
-                            >
+                        >
                             View Details
-                            </button>
+                        </button>
                         </td>
                         <td>
-                            <button
+                        <button
                             className="btn btn-sm btn-danger"
                             onClick={() => handleDelete(order._id)}
-                            >
+                        >
                             Delete
-                            </button>
+                        </button>
                         </td>
-                        </tr>
+                    </tr>
                     ))}
-                    </tbody>
+                </tbody>
                 </table>
-                </div>
+            </div>
             )}
         </div>
-    </>
+        </>
     );
 }
 

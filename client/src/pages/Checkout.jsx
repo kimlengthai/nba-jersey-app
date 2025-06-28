@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import Navbar from '../components/Navbar';
+import './Checkout.css';
 
 const Checkout = () => 
   {
@@ -51,14 +52,15 @@ const Checkout = () =>
   return (
     <>
     <Navbar />
-    <div className="container py-5">
-      <div className="mb-4 text-center">
-        <h2 className="text-primary fw-bold">Order Confirmation</h2>
-        <p className="text-muted">Thank you for your order!</p>
+    <div className="container checkout-container">
+
+      <div className="checkout-header">
+        <h2>Order Confirmation</h2>
+        <p>Thank you for your order!</p>
       </div>
 
-      <div className="card shadow-sm mb-4">
-        <div className="card-body">
+      <div className="card checkout-card">
+        <div className="card-body order-summary">
           <h5 className="mb-3">Order Summary</h5>
           <p><strong>Order ID:</strong> {_id}</p>
           <p><strong>Order Date:</strong> {new Date(orderDate).toLocaleString()}</p>
@@ -71,7 +73,7 @@ const Checkout = () =>
         </div>
       </div>
 
-      <div className="card shadow-sm">
+      <div className="card checkout-card">
         <div className="card-body">
           <h5 className="mb-3">Order Items</h5>
           <div className="table-responsive">
@@ -96,8 +98,8 @@ const Checkout = () =>
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan="3" className="text-end fw-bold">Total:</td>
-                  <td className="text-end fw-bold">${totalAmount.toFixed(2)}</td>
+                  <td colSpan="3" className="text-end">Total:</td>
+                  <td className="text-end">${totalAmount.toFixed(2)}</td>
                 </tr>
               </tfoot>
             </table>
@@ -105,14 +107,15 @@ const Checkout = () =>
         </div>
       </div>
 
-      <div className="d-flex flex-column flex-md-row justify-content-between gap-3 mt-4">
-        <button onClick={() => navigate('/orders')} className="btn btn-outline-primary w-100 w-md-auto">
+      <div className="checkout-buttons">
+        <button onClick={() => navigate('/orders')} className="btn btn-outline-primary">
           View All Orders
         </button>
-        { status !== 'Completed' && (
-          <button onClick={() => navigate(`/payment/${id}`)} className="btn btn-success w-100 w-md-auto">
-          Make a Payment
-        </button>)}
+        {status !== 'Completed' && (
+          <button onClick={() => navigate(`/payment/${id}`)} className="btn btn-success">
+            Make a Payment
+          </button>
+        )}
       </div>
     </div>
     </>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { apiUrl } from '../utils/api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import './Login.css';
 
 function Login() 
 {
@@ -42,16 +43,16 @@ function Login()
     };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-secondary">
-      <div className="bg-white p-4 rounded w-50">
-        <h2 className="mb-4">Login</h2>
+    <div className="login-page">
+      <div className="login-box">
+        <h2>Login</h2>
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="email"><strong>Email</strong></label>
             <input
               type="email"
-              className="form-control rounded-0"
+              className="form-control login-input"
               placeholder="Enter Email"
               required
               onChange={(e) => setEmail(e.target.value)}
@@ -60,28 +61,28 @@ function Login()
           </div>
           <div className="mb-3">
             <label htmlFor="password"><strong>Password</strong></label>
-            <div className='input-group'>
+            <div className="input-group">
               <input
                 type={showPassword ? "text" : "password"}
-                className="form-control rounded-0"
+                className="form-control login-input"
                 placeholder="Enter Password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button
-              type="button"
-              className='btn btn-outline-secondary'
-              onClick={() => setShowPassword(prev => !prev)}
-              tabIndex={-1}
+                type="button"
+                className="btn btn-outline-secondary password-toggle-btn"
+                onClick={() => setShowPassword(prev => !prev)}
+                tabIndex={-1}
               >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
-          <button type="submit" className="btn btn-success w-100 rounded-0">Login</button>
+          <button type="submit" className="btn btn-success login-btn">Login</button>
         </form>
         <p className="mt-3">Don't have an account?</p>
-        <Link to="/register" className="btn btn-outline-primary w-100 rounded-0">
+        <Link to="/register" className="btn btn-outline-primary login-btn">
           Register
         </Link>
       </div>

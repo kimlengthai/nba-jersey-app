@@ -1,0 +1,93 @@
+.profile-container 
+{
+  margin-top: 3rem;
+}
+
+.profile-section 
+{
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  background-color: #fff;
+  border-radius: 0.25rem;
+}
+
+.profile-section h3,
+.profile-section h5,
+.profile-section h6 
+{
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.profile-section .form-label 
+{
+  font-weight: bold;
+}
+
+.profile-section input:disabled 
+{
+  background-color: #e9ecef;
+}
+
+.profile-actions 
+{
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-actions .btn + .btn 
+{
+  margin-left: 0.5rem;
+}
+
+/* Modal Custom Styles */
+.ReactModal__Overlay 
+{
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ReactModal__Content 
+{
+  width: 90% !important;
+  max-width: 500px !important;
+  max-height: 90%;
+  margin: auto;
+  padding: 16px;
+  border-radius: 12px;
+  inset: auto !important;
+  box-sizing: border-box;
+}
+
+.modal-warning-text 
+{
+  background-color: #dc3545;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  word-wrap: break-word;
+}
+
+.modal-actions 
+{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 576px) 
+{
+  .modal-actions 
+  {
+    flex-direction: row;
+  }
+}

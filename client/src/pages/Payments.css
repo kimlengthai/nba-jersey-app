@@ -1,0 +1,12 @@
+.payments-container 
+{
+  padding: 3rem 1rem;
+}
+
+.payments-title 
+{
+  text-align: center;
+  color: #198754; /* Bootstrap's 'text-success' */
+  font-weight: bold;
+  margin-bottom: 2rem;
+}

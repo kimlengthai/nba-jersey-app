@@ -4,6 +4,7 @@ import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import Navbar from '../components/Navbar';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
+import './Payment.css';
 
 const Payment = () => 
   {
@@ -151,62 +152,61 @@ const Payment = () =>
 
     return (
       <>
-        <Navbar />
-        <div className="container py-5">
-          <h2 className="mb-4 text-center text-success fw-bold">Make a Payment</h2>
-          <form className="card p-4 mx-auto" style={{ maxWidth: '500px' }} onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Cardholder's Name</label>
-              <input
-                type="text"
-                className={`form-control ${errors.cardholder ? 'is-invalid' : ''}`}
-                value={formData.cardholder}
-                onChange={(e) => setFormData({ ...formData, cardholder: e.target.value })}
-              />
-              {errors.cardholder && <div className="invalid-feedback">{errors.cardholder}</div>}
-            </div>
+      <Navbar />
+      <div className="payment-container">
+        <h2 className="payment-title">Make a Payment</h2>
+        <form className="payment-form" onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Cardholder's Name</label>
+            <input
+              type="text"
+              className={`form-control ${errors.cardholder ? 'is-invalid' : ''}`}
+              value={formData.cardholder}
+              onChange={(e) => setFormData({ ...formData, cardholder: e.target.value })}
+            />
+            {errors.cardholder && <div className="invalid-feedback">{errors.cardholder}</div>}
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">Card Number</label>
-              <input
-                type="text"
-                className={`form-control ${errors.cardNumber ? 'is-invalid' : ''}`}
-                value={cardNumber}
-                onChange={formatAndSetCcNumber}
-              />
-              {errors.cardNumber && <div className="invalid-feedback">{errors.cardNumber}</div>}
-            </div>
+          <div className="mb-3">
+            <label className="form-label">Card Number</label>
+            <input
+              type="text"
+              className={`form-control ${errors.cardNumber ? 'is-invalid' : ''}`}
+              value={cardNumber}
+              onChange={formatAndSetCcNumber}
+            />
+            {errors.cardNumber && <div className="invalid-feedback">{errors.cardNumber}</div>}
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">Expiration Date (MM/YY)</label>
-              <input
-                type="text"
-                className={`form-control ${errors.expiration ? 'is-invalid' : ''}`}
-                value={expirationDate}
-                onChange={formatAndSetExpirationDate}
-              />
-              {errors.expiration && <div className="invalid-feedback">{errors.expiration}</div>}
-            </div>
+          <div className="mb-3">
+            <label className="form-label">Expiration Date (MM/YY)</label>
+            <input
+              type="text"
+              className={`form-control ${errors.expiration ? 'is-invalid' : ''}`}
+              value={expirationDate}
+              onChange={formatAndSetExpirationDate}
+            />
+            {errors.expiration && <div className="invalid-feedback">{errors.expiration}</div>}
+          </div>
 
-            <div className="mb-3">
-              <label className="form-label">CVV</label>
-              <input
-                type="password"
-                maxLength="3"
-                className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
-                value={formData.cvv}
-                onChange={(e) => setFormData({ ...formData, cvv: e.target.value })}
-              />
-              {errors.cvv && <div className="invalid-feedback">{errors.cvv}</div>}
-            </div>
+          <div className="mb-3">
+            <label className="form-label">CVV</label>
+            <input
+              type="password"
+              maxLength="3"
+              className={`form-control ${errors.cvv ? 'is-invalid' : ''}`}
+              value={formData.cvv}
+              onChange={(e) => setFormData({ ...formData, cvv: e.target.value })}
+            />
+            {errors.cvv && <div className="invalid-feedback">{errors.cvv}</div>}
+          </div>
 
-            <button type="submit" className="btn btn-success w-100"
-            >
-              Submit Payment
-            </button>
-          </form>
-        </div>
-      </>
+          <button type="submit" className="btn btn-success w-100">
+            Submit Payment
+          </button>
+        </form>
+      </div>
+    </>
     );
   };
 

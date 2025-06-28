@@ -3,6 +3,7 @@ import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import { getUserFromLocalStorage } from '../utils/authHelpers';
 import Navbar from '../components/Navbar';
+import './Payments.css';
 
 const Payments = () => 
   {
@@ -41,8 +42,8 @@ const Payments = () =>
       return (
         <>
           <Navbar />
-          <div className="container py-5">
-            <h2 className="text-center mb-4 text-success fw-bold">Payment History</h2>
+          <div className="payments-container">
+            <h2 className="payments-title">Payment History</h2>
 
             {error && <div className="alert alert-danger text-center">{error}</div>}
 

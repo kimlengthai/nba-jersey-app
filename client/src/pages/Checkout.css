@@ -1,0 +1,66 @@
+.checkout-container 
+{
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.checkout-header 
+{
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.checkout-header h2 
+{
+  color: #0d6efd; /* Bootstrap's primary */
+  font-weight: bold;
+}
+
+.checkout-header p 
+{
+  color: #6c757d; /* Bootstrap's muted text */
+}
+
+.checkout-card 
+{
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+.order-summary p 
+{
+  margin-bottom: 0.5rem;
+}
+
+.table th,
+.table td 
+{
+  vertical-align: middle;
+}
+
+.table tfoot td 
+{
+  font-weight: bold;
+}
+
+.checkout-buttons 
+{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) 
+{
+  .checkout-buttons 
+  {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .checkout-buttons .btn 
+  {
+    width: auto;
+  }
+}

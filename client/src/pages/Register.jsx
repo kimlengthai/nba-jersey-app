@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from '../utils/api';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import './Register.css';
 
 function Register() 
 {
@@ -111,9 +112,9 @@ function Register()
     };
 
   return (
-    <div className="container-fluid bg-light min-vh-100 d-flex justify-content-center align-items-center">
-      <div className="bg-white p-4 p-md-5 rounded shadow w-100" style={{ maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto' }}>
-        <h2 className="text-center mb-4 text-primary">Create Your Account</h2>
+    <div className="register-container">
+      <div className="register-card" style={{ maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto' }}>
+        <h2 className="register-title">Create Your Account</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label className="form-label">Full Name</label>
@@ -225,14 +226,9 @@ function Register()
 
           <button type="submit" className="btn btn-primary w-100 mb-2">Register</button>
 
-          <p className="mt-3 text-center">
+          <p className="text-center mt-3">
           Already have an account?{" "}
-          <Link 
-          to="/login" 
-          style={{ color: 'green', textDecoration: 'none' }}
-          onMouseEnter={e => e.target.style.textDecoration = 'underline'}
-          onMouseLeave={e => e.target.style.textDecoration = 'none'}
-          >
+          <Link to="/login" className="register-login-link">
             Login
           </Link>
           </p>

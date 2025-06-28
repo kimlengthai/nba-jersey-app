@@ -1,0 +1,44 @@
+.login-page 
+{
+  height: 100vh;
+  background-color: #6c757d; /* Bootstrap secondary */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box 
+{
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.login-box h2 
+{
+  margin-bottom: 1.5rem;
+}
+
+.login-input 
+{
+  border-radius: 0 !important;
+}
+
+.login-btn 
+{
+  width: 100%;
+  border-radius: 0 !important;
+}
+
+.password-toggle-group 
+{
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle-btn 
+{
+  border-radius: 0 !important;
+}
