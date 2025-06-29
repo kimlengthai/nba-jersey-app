@@ -1,23 +1,60 @@
+/* Full page wrapper with gradient background */
 .home-wrapper 
 {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f8f9fa; /* Bootstrap's light bg */
+  background: linear-gradient(135deg, #e9f0ff 0%, #f8f9fa 100%);
+  position: relative;
+  overflow: hidden;
 }
 
+.home-wrapper::before 
+{
+  content: "OKC CHAMP 2025";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(13, 110, 253, 0.08); /* Light OKC blue tone */
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-box 
+{
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  padding: 3.5rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease;
+}
+
+/* Navbar styles */
 .home-navbar 
 {
   background-color: #ffffff;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .home-navbar .navbar-brand 
 {
-  font-weight: bold;
+  font-weight: 700;
   color: #0d6efd;
+  text-decoration: none;
+  font-size: 1.5rem;
 }
 
 .home-actions 
@@ -25,41 +62,72 @@
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
-.home-content 
+/* Hero section */
+.home-hero 
 {
   flex-grow: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
 }
 
+/* Box inside hero with content */
 .home-box 
 {
-  text-align: center;
   background-color: #ffffff;
-  padding: 3rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  padding: 3.5rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease;
 }
 
 .home-box h1 
 {
-  margin-bottom: 1.5rem;
   color: #0d6efd;
-  font-weight: bold;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .home-box p 
 {
-  margin-bottom: 1.5rem;
   color: #6c757d;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
 
-.home-box .btn + .btn 
+.home-box .btn 
 {
-  margin-left: 1rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.home-box .btn-primary:hover 
+{
+  background-color: #0b5ed7;
+}
+
+.home-box .btn-outline-secondary:hover 
+{
+  background-color: #e2e6ea;
+  color: #000;
+}
+
+/* Simple fade-in animation */
+@keyframes fadeIn 
+{
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatUpDown 
+{
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }

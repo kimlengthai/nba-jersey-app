@@ -30,13 +30,13 @@ function Home()
       </nav>
 
       {/* Page Content */}
-      <div className="home-content">
-        <div className="home-box">
-          <h1>Welcome to NBA Jersey eCommerce</h1>
-          <p>Explore and order your favorite NBA jerseys with ease.</p>
-          <div>
+      <div className="home-hero">
+        <div className="home-box shadow-lg">
+          <h1 className="display-5">Step Into the Game</h1>
+          <p className="lead mb-4">Explore officially licensed NBA jerseys and shop your favourite teams today.</p>
+          <div className="d-flex justify-content-center gap-3">
             <Link to="/register" className="btn btn-primary btn-lg px-4">
-              Register
+              Get Started
             </Link>
             <Link to="/login" className="btn btn-outline-secondary btn-lg px-4">
               Login
