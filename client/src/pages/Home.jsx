@@ -50,6 +50,10 @@ function Home()
           </div>
         </div>
       </div>
+
+      <footer className="home-footer">
+        <p>&copy; {new Date().getFullYear()} NBA Jersey Shop. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

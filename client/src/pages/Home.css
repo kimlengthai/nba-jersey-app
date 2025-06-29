@@ -146,6 +146,18 @@
   color: #000;
 }
 
+.home-footer 
+{
+  background-color: #ffffff;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.95rem;
+  color: #6c757d;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
+}
+
 /* Simple fade-in animation */
 @keyframes fadeIn 
 {
