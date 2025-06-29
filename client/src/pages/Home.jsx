@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import './Home.css';
+import trophyImage from '../assets/nba-trophy.png';
 // import Navbar from "../components/Navbar";
 
 function Home() 
@@ -8,6 +9,11 @@ function Home()
   return (
     <div className="home-wrapper">
       {/* <Navbar /> */}
+      <img 
+      src={trophyImage} 
+      alt="NBA Trophy" 
+      className="nba-trophy-bg" 
+      />
       <nav className="navbar navbar-expand-lg home-navbar">
       <Link to="/" className="navbar-brand"
       onClick={() => 

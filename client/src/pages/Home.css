@@ -24,6 +24,32 @@
   z-index: 0;
 }
 
+.nba-trophy-bg 
+{
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 220px;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  animation: fadeInTrophy 3s ease-in-out forwards;
+}
+
+@keyframes fadeInTrophy 
+{
+  0% 
+  {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% 
+  {
+    opacity: 0.12;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .home-box 
 {
   position: relative;
@@ -130,4 +156,12 @@
 {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 768px) 
+{
+  .nba-trophy-bg 
+  {
+    display: none;
+  }
 }
