@@ -144,7 +144,7 @@ function Register()
             <label className="form-label">Password</label>
             <div className="input-group">
             <input 
-              type="password"
+              type= {showPassword ? 'password' : 'text'}
               name="password"
               placeholder="Password"
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}

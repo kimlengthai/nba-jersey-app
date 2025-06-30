@@ -63,7 +63,7 @@ function Login()
             <label htmlFor="password"><strong>Password</strong></label>
             <div className="input-group">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? "password" : "text"}
                 className="form-control login-input"
                 placeholder="Enter Password"
                 required

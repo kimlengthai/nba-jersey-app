@@ -2,21 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const UserModel = require('./models/User');
+const User = require('./models/User');
 const bcrypt = require('bcrypt');
 const Product = require('./models/Product');
 const Order = require('./models/Order');
 const Payment = require('./models/Payment');
+const connectDB = require('./configs/database');
 
 dotenv.config();
+connectDB();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
 
 // LOGIN ENDPOINT
 app.post('/login', async (req, res) => 
@@ -25,7 +23,7 @@ app.post('/login', async (req, res) =>
 
   try 
   {
-    const user = await UserModel.findOne({ email });
+    const user = await User.findOne({ email });
 
     if (!user) 
     {
@@ -60,7 +58,7 @@ app.post('/register', async (req, res) =>
 
     const hash = await bcrypt.hash(password, 10);
 
-    const user = await UserModel.create({
+    const user = await User.create({
       name,
       email,
       password: hash,
@@ -83,7 +81,7 @@ app.put('/users/:id', async (req, res) =>
     const updateData = req.body;
 
     // Find user by ID and update with new data, return the updated document
-    const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
 
     if (!updatedUser) 
     {
@@ -103,7 +101,7 @@ app.delete('/users/:id', async (req, res) =>
   try 
   {
     const { id } = req.params;
-    const deletedUser = await UserModel.findByIdAndDelete(id);
+    const deletedUser = await User.findByIdAndDelete(id);
     if (!deletedUser) 
     {
       return res.status(404).json({ status: "Error", message: "User not found" });
@@ -134,6 +132,7 @@ app.get('/orders', async (req, res) =>
   try
   {
     const { userId } = req.query;
+    console.log('REceived userId:', userId);
 
     if (!userId || !mongoose.Types.ObjectId.isValid(userId))
     {
