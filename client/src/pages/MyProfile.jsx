@@ -107,7 +107,7 @@ function MyProfile()
         {
           // Send a PUT request to update the user's data on the backend
             const res = await axios.put(`${apiUrl}/users/${user._id}`, form);
-            const updatedUser = res.data;
+            const updatedUser = res.data.user;
             // Update localStorage
             localStorage.setItem("user", JSON.stringify(updatedUser));
             // Update component state

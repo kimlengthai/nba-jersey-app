@@ -100,8 +100,8 @@ function Register()
         axios.post(`${apiUrl}/register`, form)
         .then(res => 
         {
-            console.log(res.data);
-            localStorage.setItem('user', JSON.stringify(res.data));
+            console.log(res.data.user);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
             navigate('/welcome');
         })
         .catch(err => 
