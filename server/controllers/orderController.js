@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const mongoose = require('mongoose');
+const User = require('../models/User');
 
 // Fetch all orders for a user
 exports.getOrders = async (req, res) => 
@@ -29,27 +30,21 @@ exports.getOrders = async (req, res) =>
   }
 };
 
-// STAFF: Get all orders from all users
-// exports.getAllOrders = async (req, res) => 
-// {
-//   console.log("👀 getAllOrders called");
-//   console.log("Headers received:", req.headers);
-
-//   try 
-//   {
-//     const orders = await Order.find()
-//       .sort({ orderDate: -1 })
-//       .populate('userId', 'name email');
-
-//     console.log("✅ Orders fetched:", orders.length);
-//     res.json(orders);
-//   } 
-//   catch (error) 
-//   {
-//     console.error("❌ Error inside getAllOrders:", error);
-//     res.status(500).json({ status: "Error", message: "Failed to fetch all orders", error: error.message });
-//   }
-// };
+// STAFF/USER: Get all orders from all users
+exports.getAllOrders = async (req, res) => 
+{
+  try 
+  {
+    const orders = await Order.find().populate('userId', 'name');
+    console.log('Orders fetched:', orders);
+    res.status(200).json(orders); // <-- must return an array
+  } 
+  catch (error) 
+  {
+    console.error('Error fetching all orders:', error);
+    res.status(500).json({ message: 'Failed to fetch all orders' });
+  }
+};
 
 // Fetch a particular order
 exports.getOrdersById = async (req, res) => 
