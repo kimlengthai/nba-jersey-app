@@ -1,37 +1,42 @@
-// const User = require('../models/User');
-// const mongoose = require('mongoose');
+const User = require('../models/User');
 
-// const authorizeRole = (allowedRoles) => {
-//   return async (req, res, next) => {
-//     try {
-//       const userId = req.header('x-user-id');
-//       console.log("AuthorizeRole middleware: userId:", userId);
+const authorizeRole = (allowedRoles) => 
+{
+  return async (req, res, next) => 
+    {
+        try 
+        {
+            // You could expect a userId sent via header, query, or body
+            const userId = req.headers['x-user-id'] || req.query.userId || req.body.userId;
+            if (!userId) 
+            {
+                return res.status(401).json({ message: 'User ID required for authorization' });
+            }
 
-//       if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-//         console.log("Invalid or missing user ID");
-//         return res.status(400).json({ status: 'Error', message: 'Invalid or missing user ID' });
-//       }
+            // Fetch user from DB
+            const user = await User.findById(userId);
+            if (!user) 
+            {
+                return res.status(401).json({ message: 'User not found' });
+            }
 
-//       const user = await User.findById(userId);
-//       if (!user) {
-//         console.log("User not found for id:", userId);
-//         return res.status(404).json({ status: 'Error', message: 'User not found' });
-//       }
+            // Check if user's role is allowed
+            if (!allowedRoles.includes(user.role)) 
+            {
+                return res.status(403).json({ message: 'Access denied: insufficient permissions' });
+            }
 
-//       console.log("User role is:", user.role);
-//       const rolesArray = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
-//       if (!rolesArray.includes(user.role)) {
-//         console.log("Access denied for role:", user.role);
-//         return res.status(403).json({ status: 'Error', message: 'Access denied. Insufficient privileges.' });
-//       }
+            // Attach user to request for downstream if needed
+            req.user = user;
+            next();
+            } 
+            catch (error) 
+            {
+                console.error('Authorization error:', error);
+                res.status(500).json({ message: 'Server error during authorization' });
+            }
+  };
+};
 
-//       req.user = user;
-//       next();
-//     } catch (err) {
-//       console.error('Authorization error:', err);
-//       res.status(500).json({ status: 'Error', message: 'Server error', error: err.message });
-//     }
-//   };
-// };
 
-// module.exports = authorizeRole;
+module.exports = authorizeRole;
