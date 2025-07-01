@@ -80,6 +80,12 @@ function Navbar()
               <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
+              {/* Show Home link only if user is staff and path is /orders/all */}
+              {user.role === 'staff' && location.pathname === '/orders/all' && (
+                <Link to="/welcome" className="nav-btn btn btn-outline-primary btn-sm">
+                  Home
+                </Link>
+              )}
               <button
                 className="btn btn-danger btn-sm px-3"
                 onClick={handleLogout}

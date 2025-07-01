@@ -59,7 +59,7 @@ const AllOrders = () =>
 
         fetchAllOrders();
     }, []);
-    
+
     return (
         <>
         <Navbar />

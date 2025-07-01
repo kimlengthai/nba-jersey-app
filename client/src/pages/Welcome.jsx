@@ -74,6 +74,17 @@ function Welcome()
               <Link to="/cart" className="btn btn-primary mt-3">View Cart</Link>
             </div>
           </div>
+
+          {/* Staff Only: View All Orders */}
+          {user?.role === 'staff' && (
+            <div className="col-md-6 col-lg-4">
+              <div className="card welcome-card action-card">
+                <h5 className="card-title">All Users' Orders</h5>
+                <p>View and manage all users' orders (staff only).</p>
+                <Link to="/orders/all" className="btn btn-danger mt-3">View All Orders</Link>
+              </div>
+            </div>
+          )}c
         </div>
       </div>
     </div>
