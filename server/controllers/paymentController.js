@@ -67,3 +67,24 @@ exports.fetchPaymentHistory = async (req, res) =>
     res.status(500).json({ status: "Error", message: 'Failed to fetch payments', error: err.message });
   }
 };
+
+// DELETE PAYMENT RECORD (STAFF ONLY)
+exports.deletePayment = async (req, res) =>
+{
+  try
+  {
+    const { id } = req.params;
+
+    const deletedPayment = await Payment.findByIdAndDelete(id);
+    if (!deletedPayment)
+    {
+      return res.status(404).json({ status: "Error", message: "Payment not found" });
+    }
+
+    res.json({ status: "Success", message: "Payment record deleted successfully", payment: deletedPayment });
+  }
+  catch (err)
+  {
+    res.status(500).json({ status: "Error", message: "Delete failed", error: err.message });
+  }
+};

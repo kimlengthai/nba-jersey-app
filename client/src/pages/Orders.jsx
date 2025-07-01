@@ -36,7 +36,7 @@ const Orders = () =>
             }
             catch (err)
             {
-                console.error("Failed to fatch orders:", err);
+                console.error("Failed to fetch orders:", err);
                 setError("Failed to load orders. Please try again later.");
             }
         };
@@ -55,7 +55,14 @@ const Orders = () =>
         try 
         {
             // Send a DELETE request to delete the user's order on the backend
-            await axios.delete(`${apiUrl}/orders/${orderId}`);
+            await axios.delete(`${apiUrl}/orders/${orderId}`, 
+                {
+                    headers: 
+                    {
+                        'x-user-id' : userId
+                    }
+                }
+            );
             // Remove the deleted order from UI
             setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
             // Redirect to the orders page
@@ -124,12 +131,13 @@ const Orders = () =>
                         </button>
                         </td>
                         <td>
+                        {user?.role === 'staff' && (
                         <button
                             className="btn btn-sm btn-danger"
                             onClick={() => handleDelete(order._id)}
                         >
                             Delete
-                        </button>
+                        </button>)}
                         </td>
                     </tr>
                     ))}

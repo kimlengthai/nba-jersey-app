@@ -6,6 +6,7 @@ const userController = require('./controllers/userController');
 const productController = require('./controllers/productController');
 const orderController = require('./controllers/orderController');
 const paymentController = require('./controllers/paymentController');
+// const authorizeRole = require('./middleware/authorizeRole');
 
 dotenv.config();
 connectDB();
@@ -14,28 +15,29 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// LOGIN ENDPOINT
+// Public routes
 app.post('/login', userController.login);
-// REGISTER ENDPOINT
 app.post('/register', userController.register);
-// PUT endpoint to update user by ID
-app.put('/users/:id', userController.updateUser);
-// DELETE user
-app.delete('/users/:id', userController.deleteUser);
-// Fetch all products
 app.get('/products', productController.getProducts);
-// Fetch all orders for a user
 app.get('/orders', orderController.getOrders);
-// Fetch a particular order
 app.get('/orders/:id', orderController.getOrdersById);
-// PLACE AN ORDER ENDPOINT
 app.post('/orders', orderController.placeOrder);
-// Delete user's order
-app.delete('/orders/:id', orderController.deleteOrder);
-// PAYMENT ENDPOINT
+app.put('/users/:id', userController.updateUser);
+app.delete('/users/:id', userController.deleteUser);
 app.post('/payment', paymentController.makePayment);
-// FETCH PAYMENT HISTORY FOR A USER
 app.get('/payments', paymentController.fetchPaymentHistory);
+
+// Staff-only routes
+// app.post('/products', authorizeRole('staff'), productController.createProduct);
+// app.delete('/payments/:id', authorizeRole('staff'), paymentController.deletePayment);
+// app.delete('/orders/:id', authorizeRole('staff'), orderController.deleteOrder);
+// app.get('/orders/all', authorizeRole('staff'), orderController.getAllOrders);
+// app.get('/orders/all', authorizeRole(['staff', 'user']), orderController.getAllOrders);
+// app.get('/orders/all', orderController.getAllOrders);
+app.get('/orders/all', (req, res) => 
+{
+  res.status(200).json({ message: "Orders route working" });
+});
 
 // START SERVER
 const PORT = process.env.PORT || 3001;

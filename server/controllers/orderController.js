@@ -15,8 +15,10 @@ exports.getOrders = async (req, res) =>
     }
 
     const orders = await Order.find({ userId })
-    .sort({ orderDate: -1 }) // latest orders first
-    .populate('items.productId', 'player'); // populate only the 'player' field
+    // latest orders first
+    .sort({ orderDate: -1 })
+    // populate only the 'player' field
+    .populate('items.productId', 'player');
 
     res.json(orders);
   }
@@ -26,6 +28,28 @@ exports.getOrders = async (req, res) =>
     res.status(500).json({ status: "Error", message: 'Server error', error: error.message });
   }
 };
+
+// STAFF: Get all orders from all users
+// exports.getAllOrders = async (req, res) => 
+// {
+//   console.log("👀 getAllOrders called");
+//   console.log("Headers received:", req.headers);
+
+//   try 
+//   {
+//     const orders = await Order.find()
+//       .sort({ orderDate: -1 })
+//       .populate('userId', 'name email');
+
+//     console.log("✅ Orders fetched:", orders.length);
+//     res.json(orders);
+//   } 
+//   catch (error) 
+//   {
+//     console.error("❌ Error inside getAllOrders:", error);
+//     res.status(500).json({ status: "Error", message: "Failed to fetch all orders", error: error.message });
+//   }
+// };
 
 // Fetch a particular order
 exports.getOrdersById = async (req, res) => 

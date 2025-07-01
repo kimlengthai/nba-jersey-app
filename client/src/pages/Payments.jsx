@@ -39,6 +39,27 @@ const Payments = () =>
           fetchPayments();
       }, [user]);
 
+      const handleDelete = async (paymentId) =>
+      {
+        try
+        {
+          await axios.delete(`${apiUrl}/payments/${paymentId}`, 
+            {
+              headers: 
+              {
+                'x-user-id' : user._id
+              }
+            }
+          );
+          setPayments(prev => prev.filter(payment => payment._id !== paymentId));
+        }
+        catch (err)
+        {
+          console.error("Failed to delete payments:", err);
+          setError("Failed to delete payment.");
+        }
+      }
+
       return (
         <>
           <Navbar />
@@ -59,6 +80,7 @@ const Payments = () =>
                       <th>Amount</th>
                       <th>Date</th>
                       <th>Status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -72,6 +94,19 @@ const Payments = () =>
                           <span className={`badge bg-${payment.status === 'Completed' ? 'success' : 'secondary'}`}>
                             {payment.status || 'Completed'}
                           </span>
+                        </td>
+                        <td>
+                        {user?.role === 'staff' ? (
+                          
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDelete(payment._id)}
+                            >
+                              Delete
+                            </button>
+                        ) : (
+                          <span className='text-muted'>N/A</span>
+                        )}
                         </td>
                       </tr>
                     ))}

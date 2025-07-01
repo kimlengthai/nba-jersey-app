@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
     state: String,
     postalCode: String,
     country: String
+  },
+  role: {
+    type: String,
+    enum: ['user', 'staff'],
+    default: 'user'
   }
 });
 

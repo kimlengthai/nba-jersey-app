@@ -22,7 +22,10 @@ exports.login = async (req, res) =>
       return res.status(401).json({ status: "Error", message: "Incorrect password" });
     }
 
-    res.json({ status: "Success", user });
+    const userSafe = user.toObject();
+    delete userSafe.password;
+
+    res.json({ status: "Success", user: userSafe });
   } catch (err) 
   {
     res.status(500).json({ status: "Error", message: "Server error", error: err.message });
@@ -42,17 +45,29 @@ exports.register = async (req, res) =>
       return res.status(400).json({ status: "Error", message: "Shipping address is missing or invalid." });
     }
 
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) 
+    {
+      return res.status(400).json({ status: "Error", message: "Email already registered." });
+    }
+
     const hash = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       name,
       email,
       password: hash,
-      shippingAddress
+      shippingAddress,
+      role: 'user' 
     });
 
-    res.status(201).json({ status: "Success", user });
-  } catch (err) 
+    const userSafe = user.toObject();
+    delete userSafe.password;
+
+    res.status(201).json({ status: "Success", user: userSafe });
+  } 
+  catch (err) 
   {
     res.status(400).json({ status: "Error", message: "Registration failed", error: err.message });
   }
