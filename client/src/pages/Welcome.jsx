@@ -84,7 +84,7 @@ function Welcome()
                 <Link to="/orders/all" className="btn btn-danger mt-3">View All Orders</Link>
               </div>
             </div>
-          )}c
+          )}
         </div>
       </div>
     </div>

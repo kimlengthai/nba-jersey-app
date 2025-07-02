@@ -30,13 +30,26 @@ exports.getOrders = async (req, res) =>
   }
 };
 
-// STAFF/USER: Get all orders from all users
+// [STAFF] Get all users' orders
 exports.getAllOrders = async (req, res) => 
 {
   try 
   {
+    const userId = req.header('x-user-id');
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) 
+    {
+      return res.status(400).json({ status: "Error", message: 'Invalid or missing userId' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user || user.role !== 'staff') 
+    {
+      return res.status(403).json({ status: "Error", message: 'Only staff can access this resource' });
+    }
+
     const orders = await Order.find().populate('userId', 'name');
-    console.log('Orders fetched:', orders);
+    console.log(`Orders fetched by staff [${user.name}]: ${orders.length}`);
     res.status(200).json(orders); // <-- must return an array
   } 
   catch (error) 
@@ -46,7 +59,7 @@ exports.getAllOrders = async (req, res) =>
   }
 };
 
-// Fetch a particular order
+// Fetch a particular order by its ID (Checkout page)
 exports.getOrdersById = async (req, res) => 
 {
   try
@@ -100,8 +113,9 @@ exports.placeOrder = async (req, res) =>
   }
 };
 
-// Delete user's order
-exports.deleteOrder = async (req, res) => 
+// [STAFF] Delete staff's order in /orders route
+// [STAFF] Delete users' orders in /orders/all route
+const deleteOrderById = async (req, res) => 
 {
   try 
   {
@@ -112,8 +126,12 @@ exports.deleteOrder = async (req, res) =>
       return res.status(404).json({ status: "Error", message: "Order not found" });
     }
     res.json({ status: "Success", message: "Order deleted successfully", order: deletedOrder });
-  } catch (err) 
+  }
+  catch (err) 
   {
     res.status(500).json({ status: "Error", message: "Delete failed", error: err.message });
   }
 };
+
+exports.deleteOrder = deleteOrderById;
+exports.deleteOrderAll = deleteOrderById;

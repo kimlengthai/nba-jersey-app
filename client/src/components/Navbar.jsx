@@ -15,6 +15,7 @@ function Navbar()
 
   const user = getUserFromLocalStorage();
 
+  /* isCheckoutPage only performs when user is logged in & on checkout page */
   const isCheckoutPage = user && /^\/checkout\/[a-f\d]{24}$/.test(location.pathname);
 
   return (
@@ -80,12 +81,6 @@ function Navbar()
               <Link to="/catalogue" className="nav-btn btn btn-outline-primary btn-sm">
                 Browse NBA Jerseys
               </Link>
-              {/* Show Home link only if user is staff and path is /orders/all */}
-              {user.role === 'staff' && location.pathname === '/orders/all' && (
-                <Link to="/welcome" className="nav-btn btn btn-outline-primary btn-sm">
-                  Home
-                </Link>
-              )}
               <button
                 className="btn btn-danger btn-sm px-3"
                 onClick={handleLogout}

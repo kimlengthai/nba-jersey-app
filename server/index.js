@@ -35,6 +35,7 @@ app.get('/payments', paymentController.fetchPaymentHistory);
 // Staff-only routes
 app.post('/products', authorizeRole(['staff']), productController.createProduct);
 app.delete('/payments/:id', authorizeRole(['staff']), paymentController.deletePayment);
+app.delete('/orders/all/:id', authorizeRole(['staff']), orderController.deleteOrderAll);
 app.delete('/orders/:id', authorizeRole(['staff']), orderController.deleteOrder);
 
 // START SERVER
