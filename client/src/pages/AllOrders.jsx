@@ -7,25 +7,33 @@ import { getUserFromLocalStorage } from '../utils/authHelpers';
 
 const AllOrders = () => 
 {
+    // Logged-in user
     const [user, setUser] = useState(null);
+    // All orders (for Staff)
     const [orders, setOrders] = useState([]);
+    // Error message
     const [error, setError] = useState('');
+    // Loading indicator
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Load user from local storage on initial render
     useEffect(() => 
     {
         const storedUser = getUserFromLocalStorage();
         setUser(storedUser);
     }, []);
 
+    // Fetch all orders (staff only) when user is available
     useEffect(() => 
     {
         if (!user) return;
 
+        // Prevent authorized access
         if (user.role !== 'staff')
         {
             setError('Only staff can access this page.');
+            // Clear any existing orders
             setOrders([]);
             /* Skip Fetching */
             return;
@@ -33,6 +41,7 @@ const AllOrders = () =>
 
         const fetchAllOrders = async () => 
         {
+            // Start loading
             setLoading(true);
             try 
             {
@@ -40,19 +49,23 @@ const AllOrders = () =>
                 {
                     headers: 
                     {
+                        // Verify role on server
                         'x-user-id': user._id,
                     },
                 });
+                // Populate orders list
                 setOrders(response.data);
                 setError('');
             } 
             catch (err) 
             {
                 console.error('Error fetching orders:', err.response?.data || err.message);
+                // Handle permission or generic errors
                 setError(err.response?.status === 403 ? 'Only staff can access this page.' : 'Failed to fetch orders.');
             } 
             finally 
             {
+                // Stop loading
                 setLoading(false);
             }
         };
@@ -60,7 +73,7 @@ const AllOrders = () =>
         fetchAllOrders();
     }, [user]);
 
-    /* Delete user's order in /orders/all route */
+    /* Delete user's order (by ID) in /orders/all route */
     const handleDelete = async (orderId) => 
     {
         try 
@@ -70,11 +83,12 @@ const AllOrders = () =>
                 {
                     headers: 
                     {
+                        // Required for backend validation
                         'x-user-id' : user?._id
                     }
                 }
             );
-            // Remove the deleted order from UI
+            // Update local state by removing the deleted order
             setOrders(prevOrders => prevOrders.filter(order => order._id !== orderId));
             // Redirect to the orders all page
             navigate("/orders/all");
@@ -85,6 +99,7 @@ const AllOrders = () =>
       
     };
 
+    // Get badge class based on order status
     const getStatusBadgeClass = (status) => 
     {
         switch (status) 
@@ -127,6 +142,7 @@ const AllOrders = () =>
                 </tr>
                 </thead>
                 <tbody>
+                {/* Map through all orders and display rows */}
                 {orders.map((order) => (
                     <tr key={order._id}>
                     <td>{order._id}</td>
@@ -152,3 +168,9 @@ const AllOrders = () =>
 };
 
 export default AllOrders;
+
+/* Optional */
+// Add a confirmation modal before deletion
+// Include order details view
+// Add filtering (by status or date)
+// Add pagination if the order list grows large

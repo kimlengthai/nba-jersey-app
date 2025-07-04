@@ -16,6 +16,7 @@ const Cart = () =>
         const userId = user?._id;
         const shippingAddress = user?.shippingAddress;
 
+        // Access cart state and methods from context
         const 
         {
             cartItems,
@@ -27,16 +28,19 @@ const Cart = () =>
 
         const navigate = useNavigate();
 
+        // Calculate total number of items in cart
         const totalQuantity = cartItems.reduce(
             (total, item) => total + item.quantity,
             0
         );
 
+        // Calculate subtotal price
         const subtotal = cartItems.reduce(
             (total, item) => total + item.price * item.quantity,
             0
         );
 
+        // Place an order by sending POST request to backend
         const handlePlaceOrder = async () => 
         {
             if (cartItems.length === 0)
@@ -55,6 +59,7 @@ const Cart = () =>
                     return;
                 }
             // Format items for API
+            // Format cart items into the structure the backend expects
             const itemsForOrder = cartItems.map(item => (
                 {
                     productId: item._id,
@@ -66,6 +71,7 @@ const Cart = () =>
 
         try
         {
+            // Send POST request to create new order to backend
             const response = await axios.post(`${apiUrl}/orders`, 
                 {
                     userId,  
@@ -75,6 +81,7 @@ const Cart = () =>
                 });
 
                 const orderId = response.data._id;
+                // Clear cart after successful order
                 clearCart();
                 navigate(`/checkout/${orderId}`);
         }
@@ -90,6 +97,7 @@ const Cart = () =>
             <Navbar />
                 <div className="container py-5">
                     <h2 className="text-primary fw-bold mb-4">Your Cart</h2>
+                    {/* Render each item in the cart */}
                     {cartItems.map((item) => (
                         <div key={item._id} className="card mb-3 p-3">
                         <div className="row g-3 align-items-center">
@@ -200,3 +208,9 @@ const Cart = () =>
 };
 
 export default Cart;
+
+/* Optional */
+// Add confirmation modals before deleting or clearing the cart
+// Display estimated shipping costs
+// Support multiple shipping address
+// Add loading spinner while async operations.
