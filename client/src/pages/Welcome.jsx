@@ -6,11 +6,13 @@ import './Welcome.css';
 
 function Welcome() 
 {
+  // Holds current logged-in user
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => 
   {
+    // Attemp to get user from localStorage
     const storedUser = getUserFromLocalStorage();
     // Checks if a user is logged in using localStorage
     // If not logged in, redirects to login page
@@ -19,9 +21,10 @@ function Welcome()
       navigate('/login');
     } else 
     {
+      // If user is logged in, set the user state
       setUser(storedUser);
     }
-  }, [navigate]);
+  }, [navigate]); // Re-runs when navigate function changes
 
   return (
     <div className="welcome-page">
@@ -92,3 +95,7 @@ function Welcome()
 }
 
 export default Welcome;
+
+// Rec: Loading State
+// Rec: Error Handling: Handle corrupt or missing localStorage data
+// Rec: Greeting Personalisation: Consider a time-based greeting
