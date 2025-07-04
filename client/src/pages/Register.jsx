@@ -7,6 +7,7 @@ import './Register.css';
 
 function Register() 
 {
+  // A state to handle the password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   // A form state for user details
@@ -14,7 +15,8 @@ function Register()
     name: '',
     email: '',
     password: '',
-    shippingAddress: {
+    shippingAddress: 
+    {
       street: '',
       city: '',
       state: '',
@@ -32,16 +34,22 @@ function Register()
       // Ex: e.target.value = "newemail@example.com"
         const { name, value } = e.target;
 
+        // This block is for shipping address fields
+        // If the field is a shipping address field
+        // update the shippingAddress object
         if (['street', 'city', 'state', 'postalCode', 'country'].includes(name)) 
             {
                 setForm((prev) => ({
                 ...prev,
-                shippingAddress: {
+                shippingAddress: 
+                {
                     ...prev.shippingAddress,
                     [name]: value
                 }
                 }));
-            } else 
+            } 
+            // Else, update the non-shipping address fields
+            else 
             {
                 setForm((prev) => ({
                 ...prev,
@@ -56,11 +64,13 @@ function Register()
   const validation = () =>
   {
     const newErrors = {};
+    // Regular expressions for input validation
     const alphaRegex = /^[A-Za-z\s]+$/;
     const emailRegex = /^\S+@\S+\.\S+$/;
     const streetRegex = /^[0-9A-Za-z\s]+$/;
     const postalCodeRegex = /^\d{4}$/;
 
+    // Validate each field with conditions
     if (!form.name.trim()) newErrors.name = 'Full name is required.';
     else if (!alphaRegex.test(form.name)) newErrors.name = 'Full name must contain letters only.';
 
@@ -93,20 +103,25 @@ function Register()
 
   const handleSubmit = (e) => 
     {
+      // Prevent page reload
         e.preventDefault();
 
+        // Stop if validation fails
         if (!validation()) return;
-
+        // Add a loading spinner during API request
+        // Send the form data to the server using POST request
         axios.post(`${apiUrl}/register`, form)
         .then(res => 
         {
             console.log(res.data.user);
+            // Store user data in local storage
             localStorage.setItem('user', JSON.stringify(res.data.user));
             navigate('/welcome');
         })
         .catch(err => 
         {
           console.error(err);
+          // Rec: Use toast notification instead
           alert("Registration failed. Please try again.")
         });
     };

@@ -7,8 +7,10 @@ import './Login.css';
 
 function Login() 
 {
+  // State for form inputs
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  // State to toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState();
   const navigate = useNavigate();
@@ -17,29 +19,37 @@ function Login()
   // a user submit the login form
   const handleSubmit = (e) => 
     {
+      // Prevent page reload
         e.preventDefault();
         // Clear existing error
         setError("");
-
+        // Rec: Loading State
+        // Rec: Consider rate limiting and CAPTCHA on the backend to prevent brute-force attacks
+        // Rec: Add Remember Me option
+        // Send the form data to the server using POST request
         axios.post(`${apiUrl}/login`, { email, password })
-        .then(result => {console.log(result)
-            if (result.data.status === "Success") 
-            {
-                localStorage.setItem('user', JSON.stringify(result.data.user));
-                navigate('/welcome');
-            }
-            else
-            {
-              // Display specific error
-                setError(result.data.message);
-            }
+        .then(result => 
+        {
+          console.log(result)
+          // Check if login was successful
+          if (result.data.status === "Success") 
+          {
+            // Store user data in local storage for session persistence
+            localStorage.setItem('user', JSON.stringify(result.data.user));
+            navigate('/welcome');
+          }
+          else
+          {
+            // Display specific error
+            setError(result.data.message);
+          }
         })
         .catch(err => 
-            {
-                console.error(err);
-                // Fallback for network/server error
-                setError('Login request failed. Please try again.');
-            });
+          {
+            console.error(err);
+            // Fallback for network/server error
+            setError('Login request failed. Please try again.');
+          });
     };
 
   return (
