@@ -7,13 +7,18 @@ import './Checkout.css';
 
 const Checkout = () => 
   {
+    // Get the order ID from the URL parameter
     const { id } = useParams();
     const navigate = useNavigate();
+    // State to store fetched order
     const [order, setOrder] = useState(null);
     const [error, setError] = useState(null);
 
+    // Fetch order details when component loads
+    // or when `id` changes
     useEffect(() => 
       {
+        // Check if order ID is valid
         if (!id || id.length !== 24) 
           {
             setError("Invalid order ID.");
@@ -24,7 +29,9 @@ const Checkout = () =>
       {
         try 
         {
+          // Make GET request to fetch order details from the backend
           const response = await axios.get(`${apiUrl}/orders/${id}`);
+          // Save order details in state
           setOrder(response.data);
         } 
         catch (err) 
@@ -39,6 +46,7 @@ const Checkout = () =>
 
   if (!order) return <div className="alert alert-danger mt-5 text-center">{error}</div>;
 
+  // Destructure order details for easier use
   const 
   {
     _id,
@@ -87,6 +95,7 @@ const Checkout = () =>
                 </tr>
               </thead>
               <tbody>
+              {/* Render each item in the order */}
                 {items.map((item, idx) => (
                   <tr key={idx}>
                     <td>{item.productId?.player || 'Unnamed Product'}</td>
@@ -123,3 +132,8 @@ const Checkout = () =>
 };
 
 export default Checkout;
+
+// Rec: Loader while order data is being fetched
+// Download invoice (PDF)
+// Toast notification
+// Order not found page if 404 is returned by backend

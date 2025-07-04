@@ -7,15 +7,16 @@ import './Payments.css';
 
 const Payments = () => 
   {
+    // Store payment record
     const [payments, setPayments] = useState([]);
     const [error, setError] = useState(null);
-
     const user = getUserFromLocalStorage();
 
     useEffect(() => 
       {
         const fetchPayments = async () => 
           {
+            // Guard clause: no userID means redirect or error
             if (!user?._id) 
             {
               setError("User not found. Please log in.");
@@ -23,10 +24,12 @@ const Payments = () =>
             }
             try 
             {
+              // Fetch payment history for user
               const res = await axios.get(`${apiUrl}/payments`, 
               {
                 params: { userId: user._id }
               });
+              // Store payments in state
               setPayments(res.data);
             } 
             catch (err) 
@@ -35,7 +38,7 @@ const Payments = () =>
               setError("Could not fetch payment history.");
             }
           };
-
+          // Call fetchPayments when user changes
           fetchPayments();
       }, [user]);
 
@@ -43,14 +46,17 @@ const Payments = () =>
       {
         try
         {
+          // Send a DELETE request to delete the payment on the backend
           await axios.delete(`${apiUrl}/payments/${paymentId}`, 
             {
               headers: 
               {
+                // Custom header for authorization
                 'x-user-id' : user._id
               }
             }
           );
+          // Update local state to reflect deleted payment
           setPayments(prev => prev.filter(payment => payment._id !== paymentId));
         }
         catch (err)

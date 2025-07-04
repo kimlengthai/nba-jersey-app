@@ -5,8 +5,10 @@ import './Catalogue.css';
 import { useCart } from '../context/CartContext';
 import Placeholder from '../assets/jerseyCollection/placeholder.png';
 import { apiUrl } from '../utils/api';
+// Mapping of player names to images
 import { imageMap } from '../assets/playerImages';
 
+// Team arrays for dropdown navigation
 const easternTeams = 
 [
   "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls",
@@ -22,15 +24,19 @@ const westernTeams =
   "San Antonio Spurs", "Utah Jazz"
 ];
 
-/* Create a helper function to extract the query parameters */
+/* Create a helper function to extract the query parameters from the URL */
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const Catalogue = () => 
 {
+  // Store all products
   const [products, setProducts] = useState([]);
+  // Toggle team dropdown
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  // Reference for detecting outside clicks
   const dropdownRef = useRef();
 
+  // Fetch products from API on initial mount
   useEffect(() => 
   {
     axios.get(`${apiUrl}/products`)
@@ -38,7 +44,7 @@ const Catalogue = () =>
     .catch(err => console.error("Failed to load products:", err));
   }, []);
 
-  // Close dropdown on outside click
+  // Close dropdown menu on outside click
   useEffect(() => 
   {
     const handleClickOutside = (event) => 
@@ -52,17 +58,19 @@ const Catalogue = () =>
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const { addToCart } = useCart();
+  // Access cart functionality and state
+  const { addToCart, cartItems } = useCart();
 
+  // Add a product to the shopping cart
   const handleAddToCart = (product) => 
   {
     addToCart(product);
     console.log("Add to cart:", product);
   };
 
-  const { cartItems } = useCart();
-
+  // Access query parameters from the URL
   const query = useQuery();
+  // Get selected team (if any)
   const selectedTeam = query.get('team');
 
   return (
@@ -156,6 +164,7 @@ const Catalogue = () =>
                 title="View Cart"
               >
                 <i className="fas fa-shopping-cart"></i>
+                {/* Show cart count if items exist */}
                 {cartItems.length > 0 && (
                 <span 
                 className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'
@@ -189,6 +198,7 @@ const Catalogue = () =>
       {/* Product Grid */}
       <div className="row">
         {products
+        // Filter by team
         .filter(product => !selectedTeam || product.team == selectedTeam)
         .map(product => (
           <div key={product._id} className="col-md-4 mb-4">
@@ -232,3 +242,9 @@ const Catalogue = () =>
 };
 
 export default Catalogue;
+
+/* Optional */
+// Add loading spinner while fetching products
+// Add search functionality for players or teams
+// Use modals or toasts for confirm cart additions
+// Add pagination for large product collections

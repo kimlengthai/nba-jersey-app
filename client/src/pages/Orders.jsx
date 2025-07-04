@@ -9,12 +9,15 @@ import './Orders.css';
 const Orders = () => 
 {
     const navigate = useNavigate();
+    // State to store the list of orders
     const [orders, setOrders] = useState([]);
+    // State to handle errors
     const [error, setError] = useState(null);
-
+    // Get user from localStorage
     const user = getUserFromLocalStorage();
     const userId = user?._id;
 
+    // Fetch orders on component mount or when userId changes
     useEffect(() => 
     {
         if (!userId)
@@ -27,11 +30,13 @@ const Orders = () =>
         {
             try
             {
+                // Make GET requests to fetch orders belonging to the current user
                 const response = await axios.get(`${apiUrl}/orders`, 
                     {
                         params: { userId }
                     }
                 );
+                // Save orders in state
                 setOrders(response.data);
             }
             catch (err)
@@ -74,7 +79,7 @@ const Orders = () =>
       
     };
 
-    // Function for status coloring
+    // Helper function for status coloring
     const getStatusBadgeClass = (status) => 
     {
         switch (status) 
@@ -82,6 +87,7 @@ const Orders = () =>
             case 'Completed': return 'success';
             case 'Pending': return 'warning';
             case 'Cancelled': return 'danger';
+            // Fallback for unknown status
             default: return 'secondary';
         };
     }; 

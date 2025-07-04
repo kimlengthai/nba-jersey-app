@@ -15,6 +15,7 @@ const Payment = () =>
     // State variable to hold the expiration date
     const [expirationDate, setExpirationDate] = useState('');
 
+    // Unified form state for all fields
     const [formData, setFormData] = useState(
       {
         cardholder: '',
@@ -70,12 +71,14 @@ const Payment = () =>
       const handleSubmit = async (e) => 
         {
           const user = getUserFromLocalStorage();
+          // Extract the month and year from the expiration date
           const [expiryMonth, expiryYear] = formData.expiration.split('/');
           e.preventDefault();
           if (!validate()) return;
 
           try 
           {
+            // Send the payment details to the backend
             await axios.post(`${apiUrl}/payment`, 
               {
                 orderId: id,
