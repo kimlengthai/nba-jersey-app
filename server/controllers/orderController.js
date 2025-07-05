@@ -10,11 +10,14 @@ exports.getOrders = async (req, res) =>
     const { userId } = req.query;
     console.log('Received userId:', userId);
 
+    // Validate that userId is valid
     if (!userId || !mongoose.Types.ObjectId.isValid(userId))
     {
       return res.status(400).json({ status: "Error", message: 'Invalid or missing userId' });
     }
 
+    // Find orders by userId, sort by most recent
+    // and populate product's 'player' field
     const orders = await Order.find({ userId })
     // latest orders first
     .sort({ orderDate: -1 })
@@ -35,22 +38,26 @@ exports.getAllOrders = async (req, res) =>
 {
   try 
   {
+    // Staff ID from custom request header
     const userId = req.header('x-user-id');
 
+    // Balidate userId
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) 
     {
       return res.status(400).json({ status: "Error", message: 'Invalid or missing userId' });
     }
 
+    // Ensure the user exists and has the 'staff' role
     const user = await User.findById(userId);
     if (!user || user.role !== 'staff') 
     {
       return res.status(403).json({ status: "Error", message: 'Only staff can access this resource' });
     }
 
+    // Fetch all orders and populate user names
     const orders = await Order.find().populate('userId', 'name');
     console.log(`Orders fetched by staff [${user.name}]: ${orders.length}`);
-    res.status(200).json(orders); // <-- must return an array
+    res.status(200).json(orders); // Returns an array of orders
   } 
   catch (error) 
   {
@@ -59,7 +66,7 @@ exports.getAllOrders = async (req, res) =>
   }
 };
 
-// Fetch a particular order by its ID (Checkout page)
+// Fetch a particular order by its ID (for Checkout page)
 exports.getOrdersById = async (req, res) => 
 {
   try
@@ -70,7 +77,7 @@ exports.getOrdersById = async (req, res) =>
     {
       return res.status(400).json({ status: "Error", message: 'Invalid order ID' });
     }
-    // Populate product name in order items
+    // Fetch the order and populate product's 'player' field
     const order = await Order.findById(id).populate('items.productId', 'player');
     if (!order)
     {
@@ -85,18 +92,20 @@ exports.getOrdersById = async (req, res) =>
   }
 };
 
-// PLACE AN ORDER ENDPOINT
+// Place a new order
 exports.placeOrder = async (req, res) => 
 {
   try
   {
     const { userId, items, shippingAddress, totalAmount } = req.body;
 
+    // Ensure all necessary order fields are present
     if (!userId || !items || !shippingAddress || !totalAmount)
     {
       return res.status(400).json({ status: "Error", message: 'Missing order details' });
     }
 
+    // Create and save the new order to the database
     const order = await Order.create(
       {
         userId,
@@ -105,6 +114,7 @@ exports.placeOrder = async (req, res) =>
         totalAmount
       }
     );
+    // Respond with created order
     res.status(201).json(order);
   }
   catch (err)
@@ -120,6 +130,7 @@ const deleteOrderById = async (req, res) =>
   try 
   {
     const { id } = req.params;
+    // Attempt to find and delete the order
     const deletedOrder = await Order.findByIdAndDelete(id);
     if (!deletedOrder) 
     {
@@ -133,5 +144,6 @@ const deleteOrderById = async (req, res) =>
   }
 };
 
-exports.deleteOrder = deleteOrderById;
-exports.deleteOrderAll = deleteOrderById;
+// Reusable function for two endpoints
+exports.deleteOrder = deleteOrderById; // For /orders/:id
+exports.deleteOrderAll = deleteOrderById; // For /orders/all/:id
