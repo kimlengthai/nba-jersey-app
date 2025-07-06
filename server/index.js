@@ -48,7 +48,7 @@ app.get('/payments', paymentController.fetchPaymentHistory);
 
 // Staff-only routes
 // Staff: Create new product
-app.post('/products', authorizeRole(['staff']), productController.createProduct);
+app.post('/create-product', authorizeRole(['staff']), productController.createProduct);
 // Staff: Delete payment by ID
 app.delete('/payments/:id', authorizeRole(['staff']), paymentController.deletePayment);
 // Staff: Delete an order from all users

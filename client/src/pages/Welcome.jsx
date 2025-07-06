@@ -88,6 +88,19 @@ function Welcome()
               </div>
             </div>
           )}
+
+          {/* Staff Only: Create Product */}
+          {user?.role === 'staff' && (
+            <div>
+              <div className="col-md-6 col-lg-4">
+                <div className="card welcome-card action-card">
+                  <h5 className="card-title">Create Product</h5>
+                  <p>Create a new product (staff only).</p>
+                  <Link to="/create-product" className="btn btn-warning mt-3">Create Product</Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

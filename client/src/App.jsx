@@ -12,6 +12,7 @@ import Orders from './pages/Orders';
 import Payment from './pages/Payment';
 import Payments from './pages/Payments';
 import AllOrders from './pages/AllOrders';
+import CreateProduct from './pages/CreateProduct';
 
 function App() 
 {
@@ -31,6 +32,7 @@ function App()
           <Route path="/payment/:id" element={<Payment />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/orders/all" element={<AllOrders />} />
+          <Route path="/create-product" element={<CreateProduct />} />
         </Routes>
       </BrowserRouter>
     );
