@@ -8,6 +8,7 @@ const CreateProduct = () =>
 {
   const [formData, setFormData] = useState(
   {
+    imageBase64: '',
     imageUrl: '',
     price: '',
     team: '',
@@ -28,6 +29,25 @@ const CreateProduct = () =>
       [name]: name === 'price' ? parseFloat(value) : value,
     });
   };
+
+  const handleImageUpload = (e) =>
+  {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () =>
+    {
+      setFormData((prev) => (
+        {
+          ...prev,
+          imageBase64: reader.result,
+          imageUrl: file.name,
+        }
+      ));
+    };
+    reader.readAsDataURL(file);
+  }
 
   const handleSubmit = async (e) => 
   {
@@ -53,6 +73,7 @@ const CreateProduct = () =>
 
       setMessage(`✅ Product created: ${response.data.product.player} (${response.data.product.team})`);
       setFormData({
+        imageBase64: '',
         imageUrl: '',
         price: '',
         team: '',
@@ -83,16 +104,33 @@ const CreateProduct = () =>
         {message && <div className="alert alert-info mt-3">{message}</div>}
 
         <form onSubmit={handleSubmit} className="mt-4">
-          <div className="mb-3">
-            <label className="form-label">Image URL</label>
+
+          { /* Upload Image */}
+          <div className='mb-3'>
+            <label className='form-label d-block'>
+            Image Upload
+            </label>
             <input
-              type="text"
-              name="imageUrl"
-              className="form-control"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              placeholder="Enter image URL"
+            type='file'
+            accept='image/*'
+            onChange={handleImageUpload}
+            className='d-none'
+            id='uploadImageInput'
             />
+            <label htmlFor='uploadImageInput' className='btn btn-outline-secondary'>
+            Upload Image
+            </label>
+            {formData.imageBase64 && (
+              <div className='mt-3'>
+                <img src={formData.imageBase64} alt='Preview' style={{ maxWidth: '100%', maxHeight: '200px'}}/>
+              </div>
+            )}
+            {formData.imageUrl && (
+              <div className='mt-2'>
+                <strong>Selected: </strong>
+                {formData.imageUrl}
+              </div>
+            )}
           </div>
 
           <div className="mb-3">

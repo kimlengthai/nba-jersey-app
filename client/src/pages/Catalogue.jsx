@@ -204,7 +204,7 @@ const Catalogue = () =>
           <div key={product._id} className="col-md-4 mb-4">
             <div className="card h-100 shadow-sm hover-shadow border-0 product-card">
               <img
-                src={imageMap[product.imageUrl] || Placeholder}
+                src={product.imageBase64 || imageMap[product.imageUrl] || Placeholder}
                 className="img-fluid"
                 alt={`${product.player} Jersey`}
               />
