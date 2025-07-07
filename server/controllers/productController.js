@@ -22,10 +22,10 @@ exports.createProduct = async (req, res) =>
   try
   {
     // Destructure required fields from the request body
-    const { image, team, player, price } = req.body;
+    const { imageUrl, price, team, player } = req.body;
 
     // Validate required fields
-    if (!image || !team || !player || !price)
+    if (!imageUrl || !price || !team || !player)
     {
       return res.status(400).json({ status: "Error", message: "Missing product details" });
     }
@@ -37,7 +37,7 @@ exports.createProduct = async (req, res) =>
     }
 
     // Create and save the new product in the database
-    const newProduct = await Product.create({ image, team, player, price });
+    const newProduct = await Product.create({ imageUrl, team, player, price });
 
     // Respond with the newly created product
     res.status(201).json({ status: "Success", product: newProduct });
