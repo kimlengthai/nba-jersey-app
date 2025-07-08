@@ -103,7 +103,7 @@ const Cart = () =>
                         <div className="row g-3 align-items-center">
                             <div className="col-md-3">
                             <img
-                                src={imageMap[item.imageUrl] || Placeholder}
+                                src={item.imageBase64 || imageMap[item.imageUrl] || Placeholder}
                                 alt={item.player}
                                 className="img-fluid rounded"
                                 style={{ maxHeight: '120px', objectFit: 'contain' }}
