@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 const CreateProduct = () => 
 {
+  // Form state to hold product input data
   const [formData, setFormData] = useState(
   {
     imageBase64: '',
@@ -16,13 +17,17 @@ const CreateProduct = () =>
     
   });
 
+  // Message to show success or error
   const [message, setMessage] = useState('');
+  // Get user from local storage
   const user = getUserFromLocalStorage();
 
+  // Handle changes for form fields
   const handleChange = (e) => 
   {
     const { name, value } = e.target;
 
+    // Update the specific field
     setFormData(
     {
       ...formData,
@@ -30,12 +35,15 @@ const CreateProduct = () =>
     });
   };
 
+  // Handle file input ad convert image to Base64
   const handleImageUpload = (e) =>
   {
+    // Get the uploaded file
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
+    // Once file is read, update formData with image
     reader.onloadend = () =>
     {
       setFormData((prev) => (
@@ -46,6 +54,7 @@ const CreateProduct = () =>
         }
       ));
     };
+    // Start reading file as base64
     reader.readAsDataURL(file);
   }
 
@@ -63,6 +72,7 @@ const CreateProduct = () =>
 
     try 
     {
+      // Send POST request to create product
       const response = await axios.post(`${apiUrl}/create-product`, formData, 
       {
         headers: 
@@ -71,6 +81,7 @@ const CreateProduct = () =>
         },
       });
 
+      // On success, show message and reset form
       setMessage(`✅ Product created: ${response.data.product.player} (${response.data.product.team})`);
       setFormData({
         imageBase64: '',
