@@ -9,6 +9,7 @@ function Welcome()
   // Holds current logged-in user
   const [user, setUser] = useState(null);
   const [greeting, setGreeting] = useState('Hello');
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => 
@@ -36,6 +37,8 @@ function Welcome()
       if (hour < 12) setGreeting('Good Morning');
       else if (hour < 18) setGreeting('Good Afternoon');
       else setGreeting('Good Evening');
+
+      setIsLoading(false);
       }
       catch (err)
       {
@@ -44,6 +47,16 @@ function Welcome()
       }
   }, [navigate]); // Re-runs when navigate function changes
 
+  if (isLoading)
+  {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="welcome-page">
       <Navbar />
@@ -126,7 +139,3 @@ function Welcome()
 }
 
 export default Welcome;
-
-// Rec: Loading State
-// Rec: Error Handling: Handle corrupt or missing localStorage data
-// Rec: Greeting Personalisation: Consider a time-based greeting
