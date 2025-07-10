@@ -79,6 +79,7 @@ function Welcome()
               <h5 className="card-title">Account Summary</h5>
               <p><strong>Name:</strong> {user?.name || "Loading..."}</p>
               <p><strong>Email:</strong> {user?.email || "Loading..."}</p>
+              <p><strong>Role:</strong> {user?.role.charAt(0).toUpperCase() + user?.role.slice(1) || "Loading..."}</p>
             </div>
           </div>
 
