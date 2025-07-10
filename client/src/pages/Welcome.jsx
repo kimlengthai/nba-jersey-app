@@ -8,22 +8,40 @@ function Welcome()
 {
   // Holds current logged-in user
   const [user, setUser] = useState(null);
+  const [greeting, setGreeting] = useState('Hello');
   const navigate = useNavigate();
 
   useEffect(() => 
   {
-    // Attemp to get user from localStorage
-    const storedUser = getUserFromLocalStorage();
-    // Checks if a user is logged in using localStorage
-    // If not logged in, redirects to login page
-    if (!storedUser) 
+    try
     {
-      navigate('/login');
-    } else 
-    {
-      // If user is logged in, set the user state
+      // Attemp to get user from localStorage
+      const storedUser = getUserFromLocalStorage();
+      // Checks if a user is logged in using localStorage
+      // If not logged in, redirects to login page
+      if (!storedUser ||
+        typeof storedUser !== 'object' ||
+        !storedUser._id ||
+        !storedUser.name ||
+        !storedUser.email ||
+        !storedUser.role
+      )
+      {
+        throw new Error("Invalid user object");
+      } 
       setUser(storedUser);
-    }
+
+      // Time-based greeting
+      const hour = new Date().getHours();
+      if (hour < 12) setGreeting('Good Morning');
+      else if (hour < 18) setGreeting('Good Afternoon');
+      else setGreeting('Good Evening');
+      }
+      catch (err)
+      {
+        console.error("User data error:", err.message);
+        navigate('/login');
+      }
   }, [navigate]); // Re-runs when navigate function changes
 
   return (
@@ -35,7 +53,7 @@ function Welcome()
           {/* Welcome Message */}
           <div className="col-md-6 col-lg-4">
             <div className="card welcome-card text-center">
-              <h2 className="welcome-title">Welcome, {user?.name}</h2>
+              <h2 className="welcome-title">{greeting}, {user?.name}</h2>
               <p className="welcome-subtitle">
                 Your email is <strong>{user?.email}</strong>.
               </p>
