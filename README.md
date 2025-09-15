@@ -97,7 +97,6 @@ The frontend will run at http://localhost:5173 (default for Vite). It should aut
 
 ## Project Structure
 ```bash
-Copy code
 nba-jersey-shop/
 ├── client/                  # React frontend
 │   ├── src/
